@@ -39,7 +39,19 @@ sudo systemctl start docker && sudo systemctl enable docker
 docker buildx version
 ```
 
-```sh {"name":"Verify Compose plugin","tag":"prerequisites","terminalRows":"2","interactive":"false"}
+### Install Compose plugin
+
+Docker 29.x needs the Compose **CLI plugin** — `docker compose` (with a space), not the old `docker-compose` command. This cell installs it via apt, or downloads it if apt reports it is already installed but the plugin is missing.
+
+```sh {"name":"Ensure Compose plugin","tag":"prerequisites","terminalRows":"10","interactive":"true"}
+if ! docker compose version >/dev/null 2>&1; then
+  sudo apt install -y docker-compose-v2 2>/dev/null || sudo apt install --reinstall -y docker-compose-v2
+fi
+if ! docker compose version >/dev/null 2>&1; then
+  mkdir -p ~/.docker/cli-plugins
+  curl -fsSL "https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-$(uname -m)" -o ~/.docker/cli-plugins/docker-compose
+  chmod +x ~/.docker/cli-plugins/docker-compose
+fi
 docker compose version
 ```
 
@@ -64,6 +76,16 @@ sudo chown $USER /var/run/docker.sock
 ⬆️ **Re-run the Docker daemon info cell** — it should work immediately.
 
 > **Optional (permanent fix):** Add your user to the `docker` group with `sudo usermod -aG docker $USER`, then log out and back in. After that you won't need the `chown` step above (until Docker restarts the socket).
+
+### Fix: compose not found
+
+If **Ensure Compose plugin** prints `docker: 'compose' is not a docker command`:
+
+1. Re-run **Ensure Compose plugin** — the apt reinstall or download fallback should fix it.
+2. Confirm with `docker compose version` (should show v2.x).
+3. If you installed Docker from Docker's official apt repo instead of Ubuntu's `docker.io`, run: `sudo apt install -y docker-compose-plugin`, then re-run **Ensure Compose plugin**.
+
+⬆️ **Do not skip this** — Module 5 requires `docker compose`.
 
 ## Module 1: Creating an Image
 
@@ -219,6 +241,8 @@ docker image prune -f
 ## Module 5: Docker Compose with Bridge Networks
 
 Multi-container apps with **bridge** networks. Inspect `examples/compose-demo/`.
+
+> Requires `docker compose version` to succeed (Module 0). Re-run **Ensure Compose plugin** if needed.
 
 ### Validate compose file
 
