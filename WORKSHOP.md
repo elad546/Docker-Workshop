@@ -49,13 +49,15 @@ sudo apt install -y util-linux-extra
 echo "Added $(whoami) to the docker group."
 ```
 
-**Step 2** — confirm the fix (runs the real `/usr/bin/docker` via `sg`):
+**Step 2** — confirm the fix:
 
 ```sh {"terminalRows":"6"}
 sg docker -c "docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5"
 ```
 
-If Step 2 works, your user is in the `docker` group — the remaining issue is refreshing groups in VS Code.
+**Why does Step 2 work but the second cell doesn't?**
+
+`usermod` updates the system config, but VS Code (and each Runme cell) still runs with the **groups from when you logged in**. `sg docker` starts a one-off shell with the `docker` group applied, so `docker info` succeeds. The second cell uses plain `docker` without that — so it keeps failing until you refresh your session (Step 3).
 
 **Step 3** — refresh groups, then re-run the second cell. Try **A**, then **B** if needed:
 
@@ -71,8 +73,6 @@ code .
 Re-open `WORKSHOP.md` and re-run the second cell (`docker info`).
 
 **C) Log out** of Linux and back in, reopen VS Code, re-run the second cell.
-
-> Runme runs each cell in a separate shell. Until groups refresh (Step 3), plain `docker` in cells may still fail even though Step 2 succeeded. Step 2 proves the install is correct; Step 3 makes the second cell work normally.
 
 ---
 
