@@ -26,11 +26,15 @@ Install Docker, verify it works, and fix permission errors if needed.
 ### Install Docker
 
 ```sh {"name":"Install Docker packages","tag":"prerequisites","terminalRows":"8","interactive":"false"}
-sudo apt update && sudo apt install -y docker.io
+sudo apt update && sudo apt install -y docker.io docker-buildx
 ```
 
 ```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"false"}
 sudo systemctl start docker && sudo systemctl enable docker
+```
+
+```sh {"name":"Verify Buildx","tag":"prerequisites","terminalRows":"2","interactive":"false"}
+docker buildx version
 ```
 
 ### Verify Docker
@@ -64,10 +68,10 @@ A **Dockerfile** describes how to build an image. Inspect `examples/hello-docker
 
 ### Build the image
 
-The `-t` flag tags the image. Docker caches each instruction as a **layer**.
+The `-t` flag tags the image. `--load` saves the image locally. Docker caches each instruction as a **layer**.
 
 ```sh {"name":"Build hello-docker image","tag":"create-image","terminalRows":"12","interactive":"false"}
-cd examples/hello-docker && docker build -t hello-docker:1.0 .
+cd examples/hello-docker && docker buildx build --load -t hello-docker:1.0 .
 ```
 
 ### List the new image
