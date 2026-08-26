@@ -33,24 +33,46 @@ sudo systemctl start docker && sudo systemctl enable docker
 docker --version
 ```
 
-```sh {"terminalRows":"6"}
+```sh {"terminalRows":"6","name":"verify-docker-info"}
 docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 ```
 
 ### Fix: permission denied
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run this fix:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, work through these steps:
 
-```sh {"terminalRows":"3"}
+**Step 1** — add your user to the `docker` group:
+
+```sh {"terminalRows":"6"}
 sudo usermod -aG docker $USER
+sudo apt install -y util-linux-extra
 echo "Added $(whoami) to the docker group."
 ```
 
-**Refresh your session** — press `Ctrl+Shift+P`, type **Developer: Reload Window**, and press Enter.
+**Step 2** — confirm the fix (runs the real `/usr/bin/docker` via `sg`):
 
-⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
+```sh {"terminalRows":"6"}
+sg docker -c "docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5"
+```
 
-If it still fails, log out of Linux and log back in, then reopen VS Code.
+If Step 2 works, your user is in the `docker` group — the remaining issue is refreshing groups in VS Code.
+
+**Step 3** — refresh groups, then re-run the second cell. Try **A**, then **B** if needed:
+
+**A) Reload Window** — `Ctrl+Shift+P` → **Developer: Reload Window** → re-run the second cell (`docker info`).
+
+**B) newgrp** — close VS Code, open a regular terminal, and run:
+
+```sh
+newgrp docker
+code .
+```
+
+Re-open `WORKSHOP.md` and re-run the second cell (`docker info`).
+
+**C) Log out** of Linux and back in, reopen VS Code, re-run the second cell.
+
+> Runme runs each cell in a separate shell. Until groups refresh (Step 3), plain `docker` in cells may still fail even though Step 2 succeeded. Step 2 proves the install is correct; Step 3 makes the second cell work normally.
 
 ---
 
