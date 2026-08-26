@@ -39,26 +39,37 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 ### Fix: permission denied
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run this fix:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run these steps:
+
+**Step 1** — add your user to the `docker` group:
 
 ```sh {"terminalRows":"3"}
 sudo usermod -aG docker $USER
 echo "Added $(whoami) to the docker group."
 ```
 
-**Apply the change** — log out of your Linux session and log back in, then **reopen VS Code**.
+**Step 2** — install `sg` and set up a Docker wrapper for this Runme session:
 
-> `newgrp` does not work reliably in Runme notebooks (each cell runs in its own shell). Logging out is the correct way to refresh your group membership.
-
-⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
-
-**Can't log out right now?** Use `sudo` for Docker commands until you do:
-
-```sh {"terminalRows":"3"}
-sudo docker info --format '{{.ServerVersion}}' 2>/dev/null || sudo docker info | head -5
+```sh {"terminalRows":"10"}
+sudo apt install -y util-linux-extra
+mkdir -p .workshop/bin
+cat > .workshop/bin/docker << 'EOF'
+#!/bin/bash
+if /usr/bin/docker info &>/dev/null; then
+  exec /usr/bin/docker "$@"
+fi
+exec sg docker -c "docker $(printf '%q ' "$@")"
+EOF
+chmod +x .workshop/bin/docker
+export PATH="$(pwd)/.workshop/bin:$PATH"
+echo "Docker wrapper active — remaining cells can use docker normally."
 ```
 
-Prefix workshop commands with `sudo` for this session (e.g. `sudo docker ps`). After you log out and back in, run them without `sudo`.
+> **Why not `newgrp`?** Runme runs each cell in a separate shell, so `newgrp` does not carry over. **`sg docker`** reads group membership from `/etc/group` and works immediately after `usermod` — no logout required. The wrapper above applies `sg` automatically for every `docker` command in this session.
+
+⬆️ **Go back to the second cell** (`docker info …`) and run it again — it should succeed.
+
+After you **log out and back in** later, you can remove the wrapper (`unset` the PATH change) and use `/usr/bin/docker` directly.
 
 ---
 
