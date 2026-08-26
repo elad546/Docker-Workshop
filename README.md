@@ -1,6 +1,6 @@
 # Docker Basics Interactive Workshop
 
-A hands-on Docker tutorial you run directly inside VS Code using the [Runme](https://runme.dev) extension. Each command is a runnable cell — click ▶ and follow along.
+A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://runme.dev) extension. Each command is a runnable cell — click ▶ and follow along.
 
 **Estimated time:** 30–45 minutes
 
@@ -8,22 +8,18 @@ A hands-on Docker tutorial you run directly inside VS Code using the [Runme](htt
 
 | Requirement | Notes |
 |-------------|-------|
-| [Docker Engine](https://docs.docker.com/get-docker/) | Docker Desktop or native Docker on Linux |
-| [VS Code](https://code.visualstudio.com/) | Any recent version |
-| [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) | Opens `.md` files as interactive notebooks |
-
-Optional: install the [Runme CLI](https://docs.runme.dev/installation/cli) to run named cells from the terminal:
-
-```bash
-runme run --filename WORKSHOP.md build-hello-image
-```
+| [VS Code](https://code.visualstudio.com/) | Open this repo as a folder |
+| [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) | VS Code will suggest it when you open the repo |
+| [Docker Desktop](https://docs.docker.com/desktop/) | Or Docker Engine on Linux — must be running |
 
 ## Start here
 
-1. Clone this repository and open it in VS Code.
-2. Install the Runme extension when prompted (or from the Extensions panel).
-3. Open **[WORKSHOP.md](WORKSHOP.md)** — it renders as a notebook with runnable cells.
-4. Run each cell in order from top to bottom.
+1. **Clone** this repository and open the folder in VS Code.
+2. **Install Runme** — click *Install* when VS Code recommends extensions, or open Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`) and search for **Runme**.
+3. **Open [WORKSHOP.md](WORKSHOP.md)** — Runme renders it as an interactive notebook.
+4. **Run each cell** in order from top to bottom (▶ button on each code block).
+
+> **Tip:** If a `.md` file opens as plain text instead of a notebook, right-click the file → **Open With…** → **Runme**.
 
 ## What you'll learn
 

@@ -1,27 +1,29 @@
----
-shell: bash
-terminalRows: 15
----
-
 # Docker Basics Interactive Workshop
 
-Welcome! This notebook walks through Docker fundamentals step by step. Open this file in VS Code with the [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) installed, then click **Run** (▶) on each cell in order.
+Welcome! This notebook walks through Docker fundamentals step by step.
 
 **Estimated time:** 30–45 minutes
+
+## Before you start (VS Code)
+
+1. Open this repository in [VS Code](https://code.visualstudio.com/).
+2. Install the [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) when prompted (Extensions panel → search **Runme**).
+3. Open this file — VS Code renders it as a notebook.
+4. Click **Run** (▶) on each cell, top to bottom.
+
+You also need [Docker Desktop](https://docs.docker.com/desktop/) (or Docker Engine on Linux) running.
 
 ---
 
 ## Module 0: Prerequisites
 
-Make sure Docker Engine and the Runme VS Code extension are installed before continuing.
-
 ### Verify Docker
 
-```sh {"name":"docker-version","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker --version
 ```
 
-```sh {"name":"docker-info","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 ```
 
@@ -35,15 +37,15 @@ Inspect the example project at `examples/hello-docker/` — it uses nginx to ser
 
 ### Build the image
 
-```sh {"name":"build-hello-image","cwd":"examples/hello-docker","interactive":"false","closeTerminalOnSuccess":"false"}
-docker build -t hello-docker:1.0 .
+```sh
+cd examples/hello-docker && docker build -t hello-docker:1.0 .
 ```
 
 The `-t` flag **tags** the image with a name (`hello-docker`) and version (`1.0`). Docker caches each instruction as a **layer** to speed up rebuilds.
 
 ### List the new image
 
-```sh {"name":"list-hello-image","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker images hello-docker
 ```
 
@@ -57,7 +59,7 @@ You should see `hello-docker` with tag `1.0`, along with its image ID and size.
 
 ### Start a container in the background
 
-```sh {"name":"run-hello-container","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker run -d --name hello -p 8080:80 hello-docker:1.0
 ```
 
@@ -67,11 +69,11 @@ docker run -d --name hello -p 8080:80 hello-docker:1.0
 
 ### List running containers
 
-```sh {"name":"docker-ps","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker ps
 ```
 
-```sh {"name":"docker-ps-all","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker ps -a
 ```
 
@@ -79,13 +81,13 @@ docker ps -a
 
 ### Verify the app is reachable
 
-```sh {"name":"curl-hello-app","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 curl -s localhost:8080
 ```
 
 ### Exec a command (non-interactive)
 
-```sh {"name":"exec-cat-html","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker exec hello cat /usr/share/nginx/html/index.html
 ```
 
@@ -93,7 +95,7 @@ docker exec hello cat /usr/share/nginx/html/index.html
 
 ### Exec an interactive shell
 
-```sh {"name":"exec-interactive-shell","interactive":"true","closeTerminalOnSuccess":"false"}
+```sh {"interactive":"true"}
 docker exec -it hello sh
 ```
 
@@ -101,7 +103,7 @@ This opens an interactive shell inside the container. Try running `hostname` or 
 
 ### View container logs
 
-```sh {"name":"docker-logs-hello","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker logs hello
 ```
 
@@ -113,19 +115,19 @@ docker logs hello
 
 ### Create a marker file inside the container
 
-```sh {"name":"commit-create-marker","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker exec hello sh -c 'echo "committed-layer" > /tmp/marker'
 ```
 
 ### Commit the container as a new image
 
-```sh {"name":"docker-commit","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker commit hello hello-docker:committed
 ```
 
 ### Compare images
 
-```sh {"name":"compare-images","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker images hello-docker
 ```
 
@@ -133,7 +135,7 @@ You should now see both `1.0` and `committed` tags.
 
 ### Prove the change persisted
 
-```sh {"name":"verify-committed-image","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker run --rm hello-docker:committed cat /tmp/marker
 ```
 
@@ -147,21 +149,21 @@ These commands manage the lifecycle of containers and images.
 
 ### Stop and start a container
 
-```sh {"name":"docker-stop-hello","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker stop hello
 ```
 
-```sh {"name":"docker-ps-after-stop","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker ps -a --filter name=hello
 ```
 
 The container still exists but its status is **Exited**.
 
-```sh {"name":"docker-start-hello","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker start hello
 ```
 
-```sh {"name":"docker-ps-after-start","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker ps --filter name=hello
 ```
 
@@ -169,7 +171,7 @@ docker ps --filter name=hello
 
 > Run this cell when you are ready — it permanently removes the `hello` container.
 
-```sh {"name":"docker-rm-hello","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 docker rm -f hello
 ```
 
@@ -179,7 +181,7 @@ docker rm -f hello
 
 > Run after the container is removed.
 
-```sh {"name":"docker-rmi-hello","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 docker rmi hello-docker:1.0
 ```
 
@@ -187,7 +189,7 @@ You cannot remove an image that is still in use by a container.
 
 ### List images (alternative command)
 
-```sh {"name":"docker-image-ls","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker image ls hello-docker
 ```
 
@@ -197,7 +199,7 @@ docker image ls hello-docker
 
 > This removes dangling (untagged) images. Safe to skip if you have none.
 
-```sh {"name":"docker-image-prune","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 docker image prune -f
 ```
 
@@ -214,31 +216,31 @@ Inspect the project at `examples/compose-demo/`:
 
 ### Validate the compose file
 
-```sh {"name":"compose-config","cwd":"examples/compose-demo","interactive":"false","closeTerminalOnSuccess":"false"}
-docker compose config
+```sh
+cd examples/compose-demo && docker compose config
 ```
 
 ### Networks before starting
 
-```sh {"name":"network-ls-before","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker network ls
 ```
 
 ### Start all services
 
-```sh {"name":"compose-up","cwd":"examples/compose-demo","interactive":"false","closeTerminalOnSuccess":"false"}
-docker compose up -d --build --wait
+```sh
+cd examples/compose-demo && docker compose up -d --build --wait
 ```
 
 The `--wait` flag blocks until health checks pass, so the API is ready before you test it.
 
 ### Inspect bridge networks
 
-```sh {"name":"network-ls-after","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker network ls --filter name=compose-demo
 ```
 
-```sh {"name":"network-inspect-frontend","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 docker network inspect compose-demo_frontend --format '{{.Driver}}: {{range .Containers}}{{.Name}} {{end}}'
 ```
 
@@ -246,7 +248,7 @@ The driver should be `bridge`. Connected containers appear by name.
 
 ### Test the web front-end
 
-```sh {"name":"curl-compose-web","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 curl -s localhost:8081
 ```
 
@@ -254,7 +256,7 @@ curl -s localhost:8081
 
 The web container reaches the API at `http://api:5000` via Docker's internal DNS — no host port needed for the API.
 
-```sh {"name":"curl-compose-api-health","interactive":"false","closeTerminalOnSuccess":"false"}
+```sh
 curl -s localhost:8081/api/health
 ```
 
@@ -262,16 +264,16 @@ Run this a few times — the `redis_hits` counter should increment, proving the 
 
 ### List compose services
 
-```sh {"name":"compose-ps","cwd":"examples/compose-demo","interactive":"false","closeTerminalOnSuccess":"false"}
-docker compose ps
+```sh
+cd examples/compose-demo && docker compose ps
 ```
 
 ### Tear down compose stack
 
 > Run when finished with this module.
 
-```sh {"name":"compose-down","cwd":"examples/compose-demo","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
-docker compose down --volumes --remove-orphans
+```sh
+cd examples/compose-demo && docker compose down --volumes --remove-orphans
 ```
 
 ---
@@ -280,17 +282,17 @@ docker compose down --volumes --remove-orphans
 
 Remove any leftover workshop resources. Skip cells that already succeeded above.
 
-```sh {"name":"cleanup-containers","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 docker rm -f hello 2>/dev/null || true
 docker compose -f examples/compose-demo/docker-compose.yml down --volumes --remove-orphans 2>/dev/null || true
 ```
 
-```sh {"name":"cleanup-images","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 docker rmi hello-docker:1.0 hello-docker:committed 2>/dev/null || true
 docker rmi compose-demo-web compose-demo-api 2>/dev/null || true
 ```
 
-```sh {"name":"cleanup-verify","interactive":"false","closeTerminalOnSuccess":"false","excludeFromRunAll":"true"}
+```sh
 echo "Remaining workshop containers:" && docker ps -a --filter name=hello --filter name=compose-demo --format '{{.Names}}' | grep -E 'hello|compose-demo' || echo "(none)"
 echo "Remaining workshop images:" && docker images --format '{{.Repository}}:{{.Tag}}' | grep -E 'hello-docker|compose-demo' || echo "(none)"
 ```
