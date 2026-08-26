@@ -17,7 +17,7 @@ Welcome! This notebook walks through Docker fundamentals step by step.
 3. Open this file — VS Code renders it as a notebook.
 4. Click **Run** (▶) on each cell, top to bottom.
 
-Module 0 below installs Docker and fixes socket permissions if needed.
+Module 0 below installs Docker (Engine, Buildx, and Compose), and fixes socket permissions if needed.
 
 > Cells that use `sudo` run in **interactive** mode — enter your password when prompted.
 
@@ -28,7 +28,7 @@ Install Docker, verify it works, and fix permission errors if needed.
 ### Install Docker
 
 ```sh {"name":"Install Docker packages","tag":"prerequisites","terminalRows":"8","interactive":"true"}
-sudo apt update && sudo apt install -y docker.io docker-buildx
+sudo apt update && sudo apt install -y docker.io docker-buildx docker-compose-v2
 ```
 
 ```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"true"}
@@ -37,6 +37,10 @@ sudo systemctl start docker && sudo systemctl enable docker
 
 ```sh {"name":"Verify Buildx","tag":"prerequisites","terminalRows":"2","interactive":"false"}
 docker buildx version
+```
+
+```sh {"name":"Verify Compose plugin","tag":"prerequisites","terminalRows":"2","interactive":"false"}
+docker compose version
 ```
 
 ### Verify Docker
@@ -68,6 +72,10 @@ A **Dockerfile** describes how to build an image. Inspect `examples/hello-docker
 ### Build the image
 
 The `-t` flag tags the image. `--load` saves the image locally. Docker caches each instruction as a **layer**.
+
+```sh {"name":"Set up Buildx builder","tag":"create-image","terminalRows":"3","interactive":"false"}
+docker buildx create --use --name workshop-builder 2>/dev/null || docker buildx use workshop-builder
+```
 
 ```sh {"name":"Build hello-docker image","tag":"create-image","terminalRows":"12","interactive":"false"}
 cd examples/hello-docker && docker buildx build --load -t hello-docker:1.0 .
@@ -127,7 +135,8 @@ docker exec -it hello sh
 docker logs hello
 ```
 
-## Module 3: Commit an Image
+<details>
+<summary>Module 3: Commit an Image (optional)</summary>
 
 `docker commit` saves a container filesystem as a new image.
 
@@ -154,6 +163,8 @@ docker images hello-docker
 ```sh {"name":"Verify marker in image","tag":"commit","terminalRows":"2","interactive":"false"}
 docker run --rm hello-docker:committed cat /tmp/marker
 ```
+
+</details>
 
 ## Module 4: Container and Image Management
 
