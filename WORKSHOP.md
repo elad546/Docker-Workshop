@@ -28,7 +28,12 @@ Install Docker, verify it works, and fix permission errors if needed.
 ### Install Docker
 
 ```sh {"name":"Install Docker packages","tag":"prerequisites","terminalRows":"8","interactive":"true"}
-sudo apt update && sudo apt install -y docker.io docker-buildx docker-compose-v2
+sudo apt update && sudo apt install -y docker.io docker-buildx
+```
+
+```sh {"name":"Install Compose v2 plugin","tag":"prerequisites","terminalRows":"6","interactive":"true"}
+sudo apt install -y docker-compose-v2
+sudo apt install -y docker-compose-plugin 2>/dev/null || true
 ```
 
 ```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"true"}
@@ -41,7 +46,7 @@ docker buildx version
 
 ### Install Compose plugin
 
-Docker 29.x needs the Compose **CLI plugin** — `docker compose` (with a space), not the old `docker-compose` command. This cell installs it via apt, or downloads it if apt reports it is already installed but the plugin is missing.
+Docker 29.x uses Compose **v2** as a CLI plugin — run `docker compose` (with a space), not the legacy `docker-compose` command. The cell above installs the Ubuntu package (`docker-compose-v2`) and, when available, Docker's official package (`docker-compose-plugin`). This cell verifies it works and applies a download fallback if the plugin is still missing.
 
 ```sh {"name":"Ensure Compose plugin","tag":"prerequisites","terminalRows":"10","interactive":"true"}
 if ! docker compose version >/dev/null 2>&1; then
