@@ -39,32 +39,26 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 ### Fix: permission denied
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run these steps in order:
-
-**Step 1** — add your user to the `docker` group:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run this fix:
 
 ```sh {"terminalRows":"3"}
 sudo usermod -aG docker $USER
 echo "Added $(whoami) to the docker group."
 ```
 
-**Step 2** — install `util-linux-extra` (provides `newgrp` on minimal Ubuntu/Debian installs):
+**Apply the change** — log out of your Linux session and log back in, then **reopen VS Code**.
 
-```sh {"terminalRows":"6"}
-sudo apt install -y util-linux-extra
-```
-
-**Step 3** — activate the group in your current shell:
-
-```sh {"interactive":"true","terminalRows":"4"}
-newgrp docker
-```
-
-You are now in a subshell with the `docker` group active. Type `exit` when you want to leave it.
+> `newgrp` does not work reliably in Runme notebooks (each cell runs in its own shell). Logging out is the correct way to refresh your group membership.
 
 ⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
 
-If it still fails, **log out and back in** (or reboot), then re-run the second cell.
+**Can't log out right now?** Use `sudo` for Docker commands until you do:
+
+```sh {"terminalRows":"3"}
+sudo docker info --format '{{.ServerVersion}}' 2>/dev/null || sudo docker info | head -5
+```
+
+Prefix workshop commands with `sudo` for this session (e.g. `sudo docker ps`). After you log out and back in, run them without `sudo`.
 
 ---
 
