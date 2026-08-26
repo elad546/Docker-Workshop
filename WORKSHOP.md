@@ -51,16 +51,12 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 If the **Docker daemon info** cell shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`:
 
-```sh {"name":"Add user to docker group","tag":"prerequisites","terminalRows":"6","interactive":"false"}
+```sh {"name":"Fix docker socket permissions","tag":"prerequisites","terminalRows":"4","interactive":"false"}
 sudo usermod -aG docker $USER
-sudo apt install -y util-linux-extra
+sudo chown $USER /var/run/docker.sock
 ```
 
-```sh {"name":"Verify group with sg","tag":"prerequisites","terminalRows":"6","interactive":"false"}
-sg docker -c "docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5"
-```
-
-Log out of Linux and log back in, reopen VS Code, then **re-run the Docker daemon info cell**.
+⬆️ **Re-run the Docker daemon info cell** — it should work without logging out.
 
 ## Module 1: Creating an Image
 
