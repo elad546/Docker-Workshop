@@ -29,16 +29,26 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 ### Fix: permission denied (Linux only)
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, your user is not in the `docker` group yet. Run this fix:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, your user is not in the `docker` group yet.
+
+**Permanent fix** — no extra packages required (`usermod` is built in):
 
 ```sh {"terminalRows":"3"}
 sudo usermod -aG docker $USER
 echo "Added $(whoami) to the docker group."
 ```
 
-Then **restart VS Code** (or open a new terminal window) so the group change takes effect.
+Then **log out and back in** (or reboot). Reload Window or a new terminal tab is not enough — your login session must refresh.
 
 ⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
+
+**Temporary workaround** (until you log out) — run Docker with `sudo`:
+
+```sh {"terminalRows":"3"}
+sudo docker info --format '{{.ServerVersion}}' 2>/dev/null || sudo docker info | head -5
+```
+
+You can prefix any workshop command with `sudo` (e.g. `sudo docker ps`) until the group change takes effect. No need to install `util-linux-extra` or other packages.
 
 > Docker Desktop on macOS and Windows does not need this step.
 
