@@ -1,3 +1,7 @@
 {
-  "recommendations": ["stateful.runme"]
+  "recommendations": ["stateful.runme"],
+  "settings": {
+    "notebook.outline.showMarkdownHeadersOnly": false,
+    "notebook.outline.showCodeCells": true
+  }
 }
