@@ -13,7 +13,7 @@ A hands-on Docker tutorial for **Linux**, run inside **VS Code** with the Runme 
 | [Runme extension](vscode:extension/stateful.runme) | Opens in VS Code — or search **Runme** in Extensions (`Ctrl+Shift+X`) |
 | Docker Engine | Module 0 installs `docker.io` via apt |
 
-Module 0 covers Docker install and the permission fix (`usermod`, `sg` verify, log out/in, re-run `docker info`).
+Module 0 covers Docker install and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
 
 ## Start here
 
