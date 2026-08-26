@@ -39,37 +39,18 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 ### Fix: permission denied
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run these steps:
-
-**Step 1** — add your user to the `docker` group:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run this fix:
 
 ```sh {"terminalRows":"3"}
 sudo usermod -aG docker $USER
 echo "Added $(whoami) to the docker group."
 ```
 
-**Step 2** — install `sg` and set up a Docker wrapper for this Runme session:
+**Refresh your session** — press `Ctrl+Shift+P`, type **Developer: Reload Window**, and press Enter.
 
-```sh {"terminalRows":"10"}
-sudo apt install -y util-linux-extra
-mkdir -p .workshop/bin
-cat > .workshop/bin/docker << 'EOF'
-#!/bin/bash
-if /usr/bin/docker info &>/dev/null; then
-  exec /usr/bin/docker "$@"
-fi
-exec sg docker -c "docker $(printf '%q ' "$@")"
-EOF
-chmod +x .workshop/bin/docker
-export PATH="$(pwd)/.workshop/bin:$PATH"
-echo "Docker wrapper active — remaining cells can use docker normally."
-```
+⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
 
-> **Why not `newgrp`?** Runme runs each cell in a separate shell, so `newgrp` does not carry over. **`sg docker`** reads group membership from `/etc/group` and works immediately after `usermod` — no logout required. The wrapper above applies `sg` automatically for every `docker` command in this session.
-
-⬆️ **Go back to the second cell** (`docker info …`) and run it again — it should succeed.
-
-After you **log out and back in** later, you can remove the wrapper (`unset` the PATH change) and use `/usr/bin/docker` directly.
+If it still fails, log out of Linux and log back in, then reopen VS Code.
 
 ---
 
