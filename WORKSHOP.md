@@ -39,40 +39,18 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 ### Fix: permission denied
 
-If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, work through these steps:
-
-**Step 1** — add your user to the `docker` group:
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`:
 
 ```sh {"terminalRows":"6"}
 sudo usermod -aG docker $USER
 sudo apt install -y util-linux-extra
-echo "Added $(whoami) to the docker group."
 ```
-
-**Step 2** — confirm the fix:
 
 ```sh {"terminalRows":"6"}
 sg docker -c "docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5"
 ```
 
-**Why does Step 2 work but the second cell doesn't?**
-
-`usermod` updates the system config, but VS Code (and each Runme cell) still runs with the **groups from when you logged in**. `sg docker` starts a one-off shell with the `docker` group applied, so `docker info` succeeds. The second cell uses plain `docker` without that — so it keeps failing until you refresh your session (Step 3).
-
-**Step 3** — refresh groups, then re-run the second cell. Try **A**, then **B** if needed:
-
-**A) Reload Window** — `Ctrl+Shift+P` → **Developer: Reload Window** → re-run the second cell (`docker info`).
-
-**B) newgrp** — close VS Code, open a regular terminal, and run:
-
-```sh
-newgrp docker
-code .
-```
-
-Re-open `WORKSHOP.md` and re-run the second cell (`docker info`).
-
-**C) Log out** of Linux and back in, reopen VS Code, re-run the second cell.
+Log out of Linux and log back in, reopen VS Code, then **re-run the second cell** (`docker info`).
 
 ---
 
