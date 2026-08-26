@@ -11,9 +11,9 @@ A hands-on Docker tutorial for **Linux**, run inside **VS Code** with the Runme 
 | Linux (Ubuntu/Debian) | This workshop uses `apt` |
 | [VS Code](https://code.visualstudio.com/) | Open this repo as a folder |
 | [Runme extension](vscode:extension/stateful.runme) | Opens in VS Code — or search **Runme** in Extensions (`Ctrl+Shift+X`) |
-| Docker Engine | Module 0 installs `docker.io` and Buildx via apt |
+| Docker Engine | Module 0 installs `docker.io`, Buildx, and Compose v2 via apt |
 
-Module 0 covers Docker install and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
+Module 0 covers Docker install, the Compose plugin setup, and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
 
 ## Start here
 
