@@ -10,7 +10,9 @@ A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://r
 |-------------|-------|
 | [VS Code](https://code.visualstudio.com/) | Open this repo as a folder |
 | [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) | VS Code will suggest it when you open the repo |
-| [Docker Desktop](https://docs.docker.com/desktop/) | Or Docker Engine on Linux — must be running |
+| [Docker Desktop](https://docs.docker.com/desktop/) | macOS / Windows — or Linux: Module 0 installs `docker.io` via apt |
+
+> **Linux:** Module 0 covers `apt install docker.io`, permission fix (`usermod`, `util-linux-extra`, `newgrp`), then re-running `docker info`.
 
 ## Start here
 
@@ -38,7 +40,7 @@ A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://r
 
 Make sure these ports are free before starting the workshop.
 
-> **Linux permission denied?** Module 0 includes a fix if `docker info` fails with a socket permission error.
+> **Linux setup & permission denied?** See Module 0 for `docker.io` install and the permission fix steps.
 
 ## Repository layout
 
