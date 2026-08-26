@@ -38,6 +38,8 @@ A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://r
 
 Make sure these ports are free before starting the workshop.
 
+> **Linux permission denied?** Module 0 includes a fix if `docker info` fails with a socket permission error.
+
 ## Repository layout
 
 ```text

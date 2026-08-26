@@ -19,13 +19,28 @@ You also need [Docker Desktop](https://docs.docker.com/desktop/) (or Docker Engi
 
 ### Verify Docker
 
-```sh
+```sh {"terminalRows":"2"}
 docker --version
 ```
 
-```sh
+```sh {"terminalRows":"6"}
 docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 ```
+
+### Fix: permission denied (Linux only)
+
+If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, your user is not in the `docker` group yet. Run this fix:
+
+```sh {"terminalRows":"3"}
+sudo usermod -aG docker $USER
+echo "Added $(whoami) to the docker group."
+```
+
+Then **restart VS Code** (or open a new terminal window) so the group change takes effect.
+
+⬆️ **Go back to the second cell** (`docker info …`) and run it again — you should see the Docker server version without a permission error.
+
+> Docker Desktop on macOS and Windows does not need this step.
 
 ---
 
@@ -37,7 +52,7 @@ Inspect the example project at `examples/hello-docker/` — it uses nginx to ser
 
 ### Build the image
 
-```sh
+```sh {"terminalRows":"12"}
 cd examples/hello-docker && docker build -t hello-docker:1.0 .
 ```
 
@@ -45,7 +60,7 @@ The `-t` flag **tags** the image with a name (`hello-docker`) and version (`1.0`
 
 ### List the new image
 
-```sh
+```sh {"terminalRows":"4"}
 docker images hello-docker
 ```
 
@@ -59,7 +74,7 @@ You should see `hello-docker` with tag `1.0`, along with its image ID and size.
 
 ### Start a container in the background
 
-```sh
+```sh {"terminalRows":"2"}
 docker run -d --name hello -p 8080:80 hello-docker:1.0
 ```
 
@@ -69,11 +84,11 @@ docker run -d --name hello -p 8080:80 hello-docker:1.0
 
 ### List running containers
 
-```sh
+```sh {"terminalRows":"5"}
 docker ps
 ```
 
-```sh
+```sh {"terminalRows":"6"}
 docker ps -a
 ```
 
@@ -81,13 +96,13 @@ docker ps -a
 
 ### Verify the app is reachable
 
-```sh
+```sh {"terminalRows":"5"}
 curl -s localhost:8080
 ```
 
 ### Exec a command (non-interactive)
 
-```sh
+```sh {"terminalRows":"6"}
 docker exec hello cat /usr/share/nginx/html/index.html
 ```
 
@@ -95,7 +110,7 @@ docker exec hello cat /usr/share/nginx/html/index.html
 
 ### Exec an interactive shell
 
-```sh {"interactive":"true"}
+```sh {"interactive":"true","terminalRows":"8"}
 docker exec -it hello sh
 ```
 
@@ -103,7 +118,7 @@ This opens an interactive shell inside the container. Try running `hostname` or 
 
 ### View container logs
 
-```sh
+```sh {"terminalRows":"6"}
 docker logs hello
 ```
 
@@ -115,19 +130,19 @@ docker logs hello
 
 ### Create a marker file inside the container
 
-```sh
+```sh {"terminalRows":"2"}
 docker exec hello sh -c 'echo "committed-layer" > /tmp/marker'
 ```
 
 ### Commit the container as a new image
 
-```sh
+```sh {"terminalRows":"2"}
 docker commit hello hello-docker:committed
 ```
 
 ### Compare images
 
-```sh
+```sh {"terminalRows":"5"}
 docker images hello-docker
 ```
 
@@ -135,7 +150,7 @@ You should now see both `1.0` and `committed` tags.
 
 ### Prove the change persisted
 
-```sh
+```sh {"terminalRows":"2"}
 docker run --rm hello-docker:committed cat /tmp/marker
 ```
 
@@ -149,21 +164,21 @@ These commands manage the lifecycle of containers and images.
 
 ### Stop and start a container
 
-```sh
+```sh {"terminalRows":"2"}
 docker stop hello
 ```
 
-```sh
+```sh {"terminalRows":"4"}
 docker ps -a --filter name=hello
 ```
 
 The container still exists but its status is **Exited**.
 
-```sh
+```sh {"terminalRows":"2"}
 docker start hello
 ```
 
-```sh
+```sh {"terminalRows":"4"}
 docker ps --filter name=hello
 ```
 
@@ -171,7 +186,7 @@ docker ps --filter name=hello
 
 > Run this cell when you are ready — it permanently removes the `hello` container.
 
-```sh
+```sh {"terminalRows":"2"}
 docker rm -f hello
 ```
 
@@ -181,7 +196,7 @@ docker rm -f hello
 
 > Run after the container is removed.
 
-```sh
+```sh {"terminalRows":"2"}
 docker rmi hello-docker:1.0
 ```
 
@@ -189,7 +204,7 @@ You cannot remove an image that is still in use by a container.
 
 ### List images (alternative command)
 
-```sh
+```sh {"terminalRows":"4"}
 docker image ls hello-docker
 ```
 
@@ -199,7 +214,7 @@ docker image ls hello-docker
 
 > This removes dangling (untagged) images. Safe to skip if you have none.
 
-```sh
+```sh {"terminalRows":"3"}
 docker image prune -f
 ```
 
@@ -216,19 +231,19 @@ Inspect the project at `examples/compose-demo/`:
 
 ### Validate the compose file
 
-```sh
+```sh {"terminalRows":"8"}
 cd examples/compose-demo && docker compose config
 ```
 
 ### Networks before starting
 
-```sh
+```sh {"terminalRows":"6"}
 docker network ls
 ```
 
 ### Start all services
 
-```sh
+```sh {"terminalRows":"10"}
 cd examples/compose-demo && docker compose up -d --build --wait
 ```
 
@@ -236,11 +251,11 @@ The `--wait` flag blocks until health checks pass, so the API is ready before yo
 
 ### Inspect bridge networks
 
-```sh
+```sh {"terminalRows":"5"}
 docker network ls --filter name=compose-demo
 ```
 
-```sh
+```sh {"terminalRows":"2"}
 docker network inspect compose-demo_frontend --format '{{.Driver}}: {{range .Containers}}{{.Name}} {{end}}'
 ```
 
@@ -248,7 +263,7 @@ The driver should be `bridge`. Connected containers appear by name.
 
 ### Test the web front-end
 
-```sh
+```sh {"terminalRows":"5"}
 curl -s localhost:8081
 ```
 
@@ -256,7 +271,7 @@ curl -s localhost:8081
 
 The web container reaches the API at `http://api:5000` via Docker's internal DNS — no host port needed for the API.
 
-```sh
+```sh {"terminalRows":"2"}
 curl -s localhost:8081/api/health
 ```
 
@@ -264,7 +279,7 @@ Run this a few times — the `redis_hits` counter should increment, proving the 
 
 ### List compose services
 
-```sh
+```sh {"terminalRows":"5"}
 cd examples/compose-demo && docker compose ps
 ```
 
@@ -272,7 +287,7 @@ cd examples/compose-demo && docker compose ps
 
 > Run when finished with this module.
 
-```sh
+```sh {"terminalRows":"6"}
 cd examples/compose-demo && docker compose down --volumes --remove-orphans
 ```
 
@@ -282,17 +297,17 @@ cd examples/compose-demo && docker compose down --volumes --remove-orphans
 
 Remove any leftover workshop resources. Skip cells that already succeeded above.
 
-```sh
+```sh {"terminalRows":"4"}
 docker rm -f hello 2>/dev/null || true
 docker compose -f examples/compose-demo/docker-compose.yml down --volumes --remove-orphans 2>/dev/null || true
 ```
 
-```sh
+```sh {"terminalRows":"4"}
 docker rmi hello-docker:1.0 hello-docker:committed 2>/dev/null || true
 docker rmi compose-demo-web compose-demo-api 2>/dev/null || true
 ```
 
-```sh
+```sh {"terminalRows":"4"}
 echo "Remaining workshop containers:" && docker ps -a --filter name=hello --filter name=compose-demo --format '{{.Names}}' | grep -E 'hello|compose-demo' || echo "(none)"
 echo "Remaining workshop images:" && docker images --format '{{.Repository}}:{{.Tag}}' | grep -E 'hello-docker|compose-demo' || echo "(none)"
 ```
