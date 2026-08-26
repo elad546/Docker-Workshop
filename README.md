@@ -1,6 +1,6 @@
 # Docker Basics Interactive Workshop
 
-A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://runme.dev) extension. Each command is a runnable cell — click ▶ and follow along.
+A hands-on Docker tutorial for **Linux**, run inside **VS Code** with the Runme extension. Each command is a runnable cell — click ▶ and follow along.
 
 **Estimated time:** 30–45 minutes
 
@@ -8,16 +8,17 @@ A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://r
 
 | Requirement | Notes |
 |-------------|-------|
+| Linux (Ubuntu/Debian) | This workshop uses `apt` |
 | [VS Code](https://code.visualstudio.com/) | Open this repo as a folder |
-| [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) | VS Code will suggest it when you open the repo |
-| [Docker Desktop](https://docs.docker.com/desktop/) | macOS / Windows — or Linux: Module 0 installs `docker.io` via apt |
+| [Runme extension](vscode:extension/stateful.runme) | Opens in VS Code — or search **Runme** in Extensions (`Ctrl+Shift+X`) |
+| Docker Engine | Module 0 installs `docker.io` via apt |
 
-> **Linux:** Module 0 covers `apt install docker.io`, permission fix (`usermod`, `util-linux-extra`, `newgrp`), then re-running `docker info`.
+Module 0 covers Docker install and the permission fix (`usermod`, `util-linux-extra`, `newgrp`).
 
 ## Start here
 
 1. **Clone** this repository and open the folder in VS Code.
-2. **Install Runme** — click *Install* when VS Code recommends extensions, or open Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`) and search for **Runme**.
+2. **Install Runme** — click *Install* when VS Code recommends extensions, or open Extensions (`Ctrl+Shift+X`) and search for **Runme**.
 3. **Open [WORKSHOP.md](WORKSHOP.md)** — Runme renders it as an interactive notebook.
 4. **Run each cell** in order from top to bottom (▶ button on each code block).
 
@@ -39,8 +40,6 @@ A hands-on Docker tutorial you run inside **VS Code** with the [Runme](https://r
 | compose-demo (web) | 8081 | Module 5 |
 
 Make sure these ports are free before starting the workshop.
-
-> **Linux setup & permission denied?** See Module 0 for `docker.io` install and the permission fix steps.
 
 ## Repository layout
 

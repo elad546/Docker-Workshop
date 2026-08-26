@@ -7,19 +7,17 @@ Welcome! This notebook walks through Docker fundamentals step by step.
 ## Before you start (VS Code)
 
 1. Open this repository in [VS Code](https://code.visualstudio.com/).
-2. Install the [Runme extension](https://marketplace.visualstudio.com/items?itemName=stateful.runme) when prompted (Extensions panel → search **Runme**).
+2. Install the [Runme extension](vscode:extension/stateful.runme) when prompted (Extensions panel → `Ctrl+Shift+X` → search **Runme**).
 3. Open this file — VS Code renders it as a notebook.
 4. Click **Run** (▶) on each cell, top to bottom.
 
-You also need [Docker Desktop](https://docs.docker.com/desktop/) (or Docker Engine on Linux) running.
+Module 0 below installs Docker and fixes socket permissions if needed.
 
 ---
 
 ## Module 0: Prerequisites
 
-> **macOS / Windows:** Install [Docker Desktop](https://docs.docker.com/desktop/) and skip the Linux-only install/fix cells below.
-
-### Install Docker (Linux)
+### Install Docker
 
 ```sh {"terminalRows":"8"}
 sudo apt update && sudo apt install -y docker.io
@@ -39,7 +37,7 @@ docker --version
 docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 ```
 
-### Fix: permission denied (Linux only)
+### Fix: permission denied
 
 If the **second cell above** shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`, run these steps in order:
 
