@@ -19,17 +19,19 @@ Welcome! This notebook walks through Docker fundamentals step by step.
 
 Module 0 below installs Docker and fixes socket permissions if needed.
 
+> Cells that use `sudo` run in **interactive** mode — enter your password when prompted.
+
 ## Module 0: Prerequisites
 
 Install Docker, verify it works, and fix permission errors if needed.
 
 ### Install Docker
 
-```sh {"name":"Install Docker packages","tag":"prerequisites","terminalRows":"8","interactive":"false"}
+```sh {"name":"Install Docker packages","tag":"prerequisites","terminalRows":"8","interactive":"true"}
 sudo apt update && sudo apt install -y docker.io docker-buildx
 ```
 
-```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"false"}
+```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"true"}
 sudo systemctl start docker && sudo systemctl enable docker
 ```
 
@@ -51,12 +53,13 @@ docker info --format '{{.ServerVersion}}' 2>/dev/null || docker info | head -5
 
 If the **Docker daemon info** cell shows `permission denied while trying to connect to the docker API at unix:///var/run/docker.sock`:
 
-```sh {"name":"Fix docker socket permissions","tag":"prerequisites","terminalRows":"4","interactive":"false"}
-sudo usermod -aG docker $USER
+```sh {"name":"Fix docker socket permissions","tag":"prerequisites","terminalRows":"4","interactive":"true"}
 sudo chown $USER /var/run/docker.sock
 ```
 
-⬆️ **Re-run the Docker daemon info cell** — it should work without logging out.
+⬆️ **Re-run the Docker daemon info cell** — it should work immediately.
+
+> **Optional (permanent fix):** Add your user to the `docker` group with `sudo usermod -aG docker $USER`, then log out and back in. After that you won't need the `chown` step above (until Docker restarts the socket).
 
 ## Module 1: Creating an Image
 
