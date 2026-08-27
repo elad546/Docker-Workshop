@@ -24,7 +24,15 @@ Two browser slide decks support the workshop:
 | **Facilitator guide** | [presentation/index.html](presentation/index.html) | Step-by-step cues while participants run `WORKSHOP.md` cells |
 | **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | 10-slide minimalist intro: local containers → Compose → K8s |
 
-Open either file in a browser (fullscreen with **F11**). Press **S** for speaker notes.
+Open either file in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
+
+| Key | Action |
+|-----|--------|
+| `→` / `←` | Next / previous slide |
+| `S` | Speaker notes (facilitator cues, timing, troubleshooting) |
+| `F` | Fullscreen |
+
+The facilitator deck mirrors each workshop module and includes green **NOW** cues — advance when most participants have finished the matching Runme cells.
 
 To serve locally (optional):
 
@@ -67,7 +75,7 @@ examples/
 ├── hello-docker/     # Single-container exercises (Modules 1–4)
 └── compose-demo/     # Multi-service compose with bridge networks (Module 5)
 WORKSHOP.md           # Interactive notebook — start here
-presentation/         # Facilitator slide deck (present while audience works)
+presentation/         # Slide decks (facilitator guide + concept overview)
 ```
 
 ## Cleanup
