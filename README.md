@@ -17,12 +17,14 @@ Module 0 covers Docker install, Compose v2 verification, and the permission fix.
 
 ## Presentations
 
-Two browser slide decks support the workshop:
+Three browser slide decks support the workshop:
 
 | Deck | File | Use case |
 |------|------|----------|
 | **Facilitator guide** | [presentation/index.html](presentation/index.html) | Step-by-step cues while participants run `WORKSHOP.md` cells |
-| **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | 10-slide minimalist intro: local containers → Compose → K8s |
+| **Facilitator guide (Blueprint)** | [presentation/index-blueprint.html](presentation/index-blueprint.html) | Same facilitator flow with Container Blueprint panels + lab visuals |
+| **Workshop companion** | [presentation/workshop-companion.html](presentation/workshop-companion.html) | 14-slide visual lab guide (NotebookLM illustrations + workshop text) |
+| **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | The Container Blueprint visuals + fleet intro |
 
 Open either file in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
 
@@ -39,6 +41,7 @@ To serve locally (optional):
 ```bash
 cd presentation && python3 -m http.server 8000
 # Facilitator:  http://localhost:8000/
+# Companion:    http://localhost:8000/workshop-companion.html
 # Concepts:     http://localhost:8000/from-local-to-fleet.html
 ```
 
@@ -75,7 +78,7 @@ examples/
 ├── hello-docker/     # Single-container exercises (Modules 1–4)
 └── compose-demo/     # Multi-service compose with bridge networks (Module 5)
 WORKSHOP.md           # Interactive notebook — start here
-presentation/         # Slide decks (facilitator guide + concept overview)
+presentation/         # Slide decks (facilitator, companion, concept overview)
 ```
 
 ## Cleanup
