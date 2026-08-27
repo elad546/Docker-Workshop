@@ -22,6 +22,7 @@ Three browser slide decks support the workshop:
 | Deck | File | Use case |
 |------|------|----------|
 | **Facilitator guide** | [presentation/index.html](presentation/index.html) | Step-by-step cues while participants run `WORKSHOP.md` cells |
+| **Facilitator guide (Blueprint)** | [presentation/index-blueprint.html](presentation/index-blueprint.html) | Same facilitator flow with Container Blueprint panels + lab visuals |
 | **Workshop companion** | [presentation/workshop-companion.html](presentation/workshop-companion.html) | 14-slide visual lab guide (NotebookLM illustrations + workshop text) |
 | **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | The Container Blueprint visuals + fleet intro |
 
