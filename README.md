@@ -13,11 +13,18 @@ A hands-on Docker tutorial for **Linux**, run inside **VS Code** with the Runme 
 | [Runme extension](vscode:extension/stateful.runme) | Opens in VS Code — or search **Runme** in Extensions (`Ctrl+Shift+X`) |
 | Docker Engine | Module 0 installs `docker.io`, Buildx, and Compose v2 via apt |
 
-Module 0 covers Docker install, the Compose plugin setup, and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
+Module 0 covers Docker install, Compose v2 verification, and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
 
-## Facilitator presentation
+## Presentations
 
-Running the workshop for a group? Open **[presentation/index.html](presentation/index.html)** in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
+Two browser slide decks support the workshop:
+
+| Deck | File | Use case |
+|------|------|----------|
+| **Facilitator guide** | [presentation/index.html](presentation/index.html) | Step-by-step cues while participants run `WORKSHOP.md` cells |
+| **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | 10-slide minimalist intro: local containers → Compose → K8s |
+
+Open either file in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
 
 | Key | Action |
 |-----|--------|
@@ -25,13 +32,14 @@ Running the workshop for a group? Open **[presentation/index.html](presentation/
 | `S` | Speaker notes (facilitator cues, timing, troubleshooting) |
 | `F` | Fullscreen |
 
-Slides mirror each workshop module and include green **NOW** cues — advance when most participants have finished the matching Runme cells.
+The facilitator deck mirrors each workshop module and includes green **NOW** cues — advance when most participants have finished the matching Runme cells.
 
 To serve locally (optional):
 
 ```bash
 cd presentation && python3 -m http.server 8000
-# Open http://localhost:8000
+# Facilitator:  http://localhost:8000/
+# Concepts:     http://localhost:8000/from-local-to-fleet.html
 ```
 
 ## Start here
@@ -67,7 +75,7 @@ examples/
 ├── hello-docker/     # Single-container exercises (Modules 1–4)
 └── compose-demo/     # Multi-service compose with bridge networks (Module 5)
 WORKSHOP.md           # Interactive notebook — start here
-presentation/         # Facilitator slide deck (present while audience works)
+presentation/         # Slide decks (facilitator guide + concept overview)
 ```
 
 ## Cleanup

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Local to Fleet: Mastering Modern Containerization</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    :root {
+      --accent: #0db7ed;
+      --text: #1a1a2e;
+      --muted: #666;
+      --line: #e8e8e8;
+    }
+
+    .reveal { color: var(--text); }
+    .reveal h1, .reveal h2, .reveal h3 {
+      text-transform: none;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .reveal h1 { font-size: 1.9em; line-height: 1.15; }
+    .reveal h2 { font-size: 1.45em; color: var(--accent); margin-bottom: 0.8em; }
+    .reveal h3 { font-size: 0.85em; color: var(--muted); font-weight: 500; margin: 0; }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.62em;
+      margin-top: 0.6em;
+      font-weight: 400;
+    }
+
+    .reveal ul {
+      display: block;
+      text-align: left;
+      margin: 0.6em 0 0 0;
+      font-size: 0.72em;
+      line-height: 1.65;
+      list-style: none;
+      padding: 0;
+    }
+
+    .reveal ul li {
+      padding: 0.25em 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .reveal ul li:last-child { border-bottom: none; }
+
+    .reveal ul li strong { color: var(--accent); font-weight: 600; }
+
+    .reveal pre {
+      font-size: 0.46em;
+      box-shadow: none;
+      margin: 0.8em 0 0;
+      width: 100%;
+    }
+
+    .reveal pre code {
+      background: #f6f8fa;
+      color: #24292f;
+      padding: 1em 1.2em;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+    }
+
+    .diagram {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.38em;
+      line-height: 1.45;
+      text-align: left;
+      background: #f6f8fa;
+      border: 1px solid var(--line);
+      padding: 1.2em;
+      border-radius: 6px;
+      white-space: pre;
+      color: #444;
+      margin-top: 0.8em;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2em;
+      text-align: left;
+      font-size: 0.72em;
+      margin-top: 0.5em;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.5em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 0.15em 0.6em;
+      border-radius: 999px;
+      margin-top: 1.2em;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4em;
+      font-size: 0.68em;
+      margin-top: 1em;
+      color: var(--muted);
+    }
+    .flow span {
+      background: #f0f9ff;
+      color: var(--accent);
+      padding: 0.3em 0.7em;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .flow .arrow { color: #ccc; font-weight: 400; }
+
+    .footer-hint {
+      position: fixed;
+      bottom: 12px;
+      right: 16px;
+      font-size: 11px;
+      color: #bbb;
+      z-index: 100;
+    }
+
+    .reveal .slide-number { color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="footer-hint"><kbd>S</kbd> speaker notes</div>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1 -->
+      <section>
+        <h1>From Local to Fleet:<br>Mastering Modern Containerization</h1>
+        <p class="subtitle">Solving the "Works on My Machine" Problem with Docker</p>
+        <ul>
+          <li>Docker packages <strong>code</strong>, <strong>libraries</strong>, and <strong>config</strong> into one portable unit</li>
+          <li>Same artifact runs on your laptop, CI, staging, and production</li>
+        </ul>
+        <aside class="notes">
+          Open with the pain everyone knows. Docker is not just virtualization — it's a packaging and delivery standard.
+        </aside>
+      </section>
+
+      <!-- Slide 2 -->
+      <section>
+        <h2>"It Works on My Machine"</h2>
+        <ul>
+          <li><strong>The conflict</strong> — Node/Python versions, missing libs, OS differences between dev and prod</li>
+          <li><strong>The cost</strong> — hours lost debugging environment mismatch and failed deploys</li>
+          <li><strong>The solution</strong> — Docker runs the app identically on any host that has the engine</li>
+        </ul>
+        <aside class="notes">
+          Keep it relatable. The fix is reproducible environments, not better documentation of dependencies.
+        </aside>
+      </section>
+
+      <!-- Slide 3 -->
+      <section>
+        <h2>Blueprints vs. Living Instances</h2>
+        <div class="two-col">
+          <ul>
+            <li><strong>Image</strong> — read-only template (Class): app + runtime + deps</li>
+            <li><strong>Container</strong> — running, isolated instance (Object)</li>
+          </ul>
+          <div>
+            <div class="flow">
+              <span>Pull</span><span class="arrow">→</span>
+              <span>Build</span><span class="arrow">→</span>
+              <span>Push</span>
+            </div>
+            <p style="font-size:0.55em; color:var(--muted); margin-top:0.8em; text-align:left;">Download from a registry · Create locally · Share with your team</p>
+          </div>
+        </div>
+        <aside class="notes">
+          OOP analogy lands quickly. Pull from Docker Hub, build from a Dockerfile, push to your registry.
+        </aside>
+      </section>
+
+      <!-- Slide 4 -->
+      <section>
+        <h2>Why Containers are Lightweight</h2>
+        <div class="diagram">  VMs                              Containers
+  ┌─────────┐                      ┌─────┐ ┌─────┐ ┌─────┐
+  │ Guest OS│  each VM             │ App │ │ App │ │ App │
+  ├─────────┤                      └──┬──┘ └──┬──┘ └──┬──┘
+  │   App   │                         └──┬───┴───┬───┘
+  └────┬────┘                            Container Runtime
+       │                                      │
+  ─────┴──────────────────────────  Host OS Kernel (shared)
+  Hypervisor · GBs · minutes boot            · MBs · ms start</div>
+        <ul>
+          <li><strong>VMs</strong> — full guest OS per machine; heavy, slow</li>
+          <li><strong>Containers</strong> — share the host kernel; fast and dense</li>
+        </ul>
+        <aside class="notes">
+          Containers isolate processes, not hardware. You get many more workloads per host.
+        </aside>
+      </section>
+
+      <!-- Slide 5 -->
+      <section>
+        <h2>How Docker Works</h2>
+        <ul>
+          <li><strong>Client</strong> — CLI you type into (<code>docker run</code>, <code>docker buildx</code>)</li>
+          <li><strong>Daemon (dockerd)</strong> — background service managing images, containers, networks</li>
+          <li><strong>Registry</strong> — image store &amp; share (Docker Hub, GHCR, private registries)</li>
+        </ul>
+        <div class="diagram">You ──docker CLI──▶ dockerd ──pull/push──▶ Registry
+                         └── creates ──▶ Containers</div>
+        <aside class="notes">
+          Client talks to daemon via API socket. Workshop Module 0 installs and verifies the daemon.
+        </aside>
+      </section>
+
+      <!-- Slide 6 -->
+      <section>
+        <h2>Modules 1–2: The First Container</h2>
+        <p class="subtitle">Workshop: <code>examples/hello-docker/</code></p>
+        <pre><code class="language-bash">docker buildx build --load -t hello-docker:1.0 .
+docker run -d --name hello -p 8080:80 hello-docker:1.0</code></pre>
+        <ul>
+          <li><strong>Build</strong> — Dockerfile layers a custom page onto <code>nginx:alpine</code></li>
+          <li><strong>Port mapping</strong> — host <code>8080</code> → container <code>80</code></li>
+          <li><strong>Verify</strong> — open <code>localhost:8080</code> or <code>curl localhost:8080</code></li>
+        </ul>
+        <aside class="notes">
+          Workshop uses Buildx with --load. Tag hello-docker:1.0 matches WORKSHOP.md exactly.
+        </aside>
+      </section>
+
+      <!-- Slide 7 -->
+      <section>
+        <h2>Modules 2–4: Inside &amp; Manage</h2>
+        <pre><code class="language-bash">docker exec -it hello sh      # explore (Alpine shell)
+docker logs hello               # inspect output
+docker ps / docker ps -a        # list containers
+docker stop hello && docker rm -f hello
+docker rmi hello-docker:1.0     # remove image</code></pre>
+        <ul>
+          <li><strong>Exec</strong> — run commands inside a live container</li>
+          <li><strong>Housekeeping</strong> — stop, remove containers; prune images when done</li>
+          <li><strong>Optional (Module 3)</strong> — <code>docker commit</code> snapshots a container to a new image</li>
+        </ul>
+        <aside class="notes">
+          nginx:alpine uses sh, not bash. Module 4 covers stop/start/rm/rmi lifecycle. Commit is optional in the workshop.
+        </aside>
+      </section>
+
+      <!-- Slide 8 -->
+      <section>
+        <h2>Module 5: Multi-Container Stacks</h2>
+        <p class="subtitle">Workshop: <code>examples/compose-demo/</code> · port <code>8081</code></p>
+        <pre><code class="language-bash">cd examples/compose-demo
+docker compose up -d --build --wait</code></pre>
+        <ul>
+          <li><strong>Docker Compose</strong> — entire stack (web + API + Redis) in one YAML file</li>
+          <li><strong>Bridge networks</strong> — <code>frontend</code> and <code>backend</code> isolate service traffic</li>
+          <li><strong>Test</strong> — <code>curl localhost:8081/api/health</code> (hits increment via Redis)</li>
+        </ul>
+        <aside class="notes">
+          Compose v2: docker compose (space), not docker-compose. Tear down with docker compose down --volumes.
+        </aside>
+      </section>
+
+      <!-- Slide 9 -->
+      <section>
+        <h2>Security First with Podman</h2>
+        <ul>
+          <li><strong>The risk</strong> — Docker's central daemon often runs as root; broader attack surface</li>
+          <li><strong>Podman</strong> — daemonless, rootless; containers are child processes of the user</li>
+          <li><strong>Advantage</strong> — deep <code>systemd</code> integration on Linux for unit-managed containers</li>
+        </ul>
+        <aside class="notes">
+          Podman is CLI-compatible with Docker for many workflows. Good option when rootless security is a requirement.
+        </aside>
+      </section>
+
+      <!-- Slide 10 -->
+      <section>
+        <h2>Managing Fleets with Kubernetes</h2>
+        <ul>
+          <li><strong>Concept</strong> — orchestrate containers across a cluster of machines, not one host</li>
+          <li><strong>Self-healing</strong> — restarts failed pods, reschedules onto healthy nodes</li>
+          <li><strong>Auto-scaling</strong> — scales replicas with CPU, memory, or custom metrics</li>
+          <li><strong>When to use what</strong> — <strong>Compose</strong> for local dev · <strong>Kubernetes</strong> for production fleets</li>
+        </ul>
+        <p class="tag">Today's workshop → Compose &nbsp;·&nbsp; Next step → K8s</p>
+        <aside class="notes">
+          Close the arc: local container (Module 1) → multi-service (Module 5) → fleet orchestration (K8s). Q&A.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      progress: true,
+      center: true,
+      transition: 'fade',
+      width: 1100,
+      height: 700,
+      plugins: [ RevealNotes, RevealHighlight ]
+    });
+  </script>
+</body>
+</html>
