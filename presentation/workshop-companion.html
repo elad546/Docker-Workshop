@@ -14,103 +14,97 @@
       --green: #90ee90;
       --orange: #ff8c42;
       --red: #ff5555;
-      --cube: #7f8c8d;
       --muted: #95a5a6;
     }
 
     .reveal .slides section.lab-slide {
       background: var(--bg) !important;
-      padding: 0.4em 0.8em;
+      padding: 0.35em 0.6em;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
     }
 
     .reveal h1, .reveal h2 {
       text-transform: none;
       letter-spacing: -0.02em;
       font-weight: 700;
+      margin: 0 0 0.2em;
     }
 
-    .reveal .lab-slide h1 {
-      color: #fff;
-      font-size: 1.55em;
-      margin-bottom: 0.15em;
-    }
-
-    .reveal .lab-slide h2 {
-      color: #fff;
-      font-size: 1.15em;
-      margin-bottom: 0.35em;
-    }
+    .reveal .lab-slide h1 { color: #fff; font-size: 1.5em; }
+    .reveal .lab-slide h2 { color: #fff; font-size: 1.1em; }
 
     .reveal .lab-sub {
       color: var(--cyan);
-      font-size: 0.72em;
+      font-size: 0.68em;
       font-weight: 500;
-      margin-bottom: 0.6em;
+      margin-bottom: 0.35em;
     }
 
     .reveal .cmd {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.58em;
-      margin: 0.35em 0 0.5em;
+      font-size: 0.54em;
+      margin: 0.15em 0 0.35em;
       line-height: 1.4;
     }
 
-    .reveal .cmd-lg {
-      font-size: 0.95em;
-      font-weight: 700;
-    }
+    .reveal .cmd-lg { font-size: 0.88em; font-weight: 700; }
 
     .reveal .cmd-box {
       display: inline-block;
       border: 2px solid var(--red);
-      padding: 0.35em 0.8em;
-      margin: 0.5em 0;
+      padding: 0.3em 0.7em;
+      margin: 0.3em 0;
       font-family: ui-monospace, monospace;
-      font-size: 0.75em;
+      font-size: 0.68em;
       color: #fff;
       background: #111;
     }
 
     .reveal .tagline {
       color: var(--muted);
-      font-size: 0.52em;
-      margin-top: 0.8em;
+      font-size: 0.5em;
+      margin-top: 0.4em;
     }
 
-    .reveal .viz-wrap {
+    .reveal .viz-img {
+      flex: 1;
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin: 0.2em auto;
+      justify-content: center;
+      min-height: 0;
+      margin: 0 auto;
+      width: 100%;
       max-width: 920px;
     }
 
-    .reveal .viz-wrap svg {
-      width: 100%;
+    .reveal .viz-img img {
+      max-width: 100%;
+      max-height: 52vh;
+      width: auto;
       height: auto;
-      max-height: 340px;
+      object-fit: contain;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      margin: 0;
     }
 
     .reveal .matrix {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.8em;
-      font-size: 0.48em;
+      gap: 0.6em;
+      font-size: 0.46em;
       text-align: center;
-      margin-top: 0.4em;
+      margin-top: 0.25em;
     }
 
-    .reveal .matrix .col {
-      border-left: 1px solid #444;
-      padding: 0 0.6em;
-    }
+    .reveal .matrix .col { border-left: 1px solid #444; padding: 0 0.5em; }
     .reveal .matrix .col:first-child { border-left: none; }
-
-    .reveal .matrix h3 { font-size: 1.1em; color: #fff; margin: 0.3em 0; }
-    .reveal .matrix .accent-gold { color: var(--gold); }
-    .reveal .matrix .accent-cyan { color: var(--cyan); }
-    .reveal .matrix .accent-green { color: var(--green); }
-    .reveal .matrix p { color: var(--muted); margin: 0.2em 0; }
+    .reveal .matrix h3 { font-size: 1.1em; color: #fff; margin: 0.2em 0; }
+    .reveal .matrix p { color: var(--muted); margin: 0.15em 0; }
 
     .c-white { color: #fff; }
     .c-cyan { color: var(--cyan); }
@@ -118,7 +112,6 @@
     .c-green { color: var(--green); }
     .c-orange { color: var(--orange); }
     .c-red { color: var(--red); }
-    .c-muted { color: var(--muted); }
 
     .footer-hint {
       position: fixed;
@@ -131,339 +124,160 @@
   </style>
 </head>
 <body>
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-    <defs>
-      <g id="iso-cube">
-        <polygon points="40,20 70,35 70,65 40,80 10,65 10,35" fill="#6b7280" stroke="#00d4ff" stroke-width="2"/>
-        <polygon points="40,20 70,35 40,50 10,35" fill="#8a9399"/>
-        <polygon points="40,20 40,50 10,35 10,5" fill="#5c6368" opacity="0.5"/>
-        <polygon points="40,50 70,35 70,65 40,80" fill="#727b80"/>
-      </g>
-      <g id="docker-whale">
-        <path d="M20 55 Q10 45 15 35 Q25 25 40 28 L55 22 Q70 18 85 25 Q95 32 90 42 Q88 50 78 52 L65 55 Q50 58 35 56 Q25 55 20 55Z" fill="none" stroke="#00d4ff" stroke-width="2"/>
-        <rect x="52" y="8" width="14" height="10" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-        <rect x="66" y="4" width="14" height="10" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-        <rect x="58" y="18" width="14" height="10" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-        <rect x="72" y="14" width="14" height="10" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-        <line x1="30" y1="48" x2="75" y2="48" stroke="#00d4ff" stroke-width="1" opacity="0.5"/>
-        <line x1="28" y1="42" x2="73" y2="42" stroke="#00d4ff" stroke-width="1" opacity="0.5"/>
-      </g>
-    </defs>
-  </svg>
-
   <div class="footer-hint">Press <kbd>S</kbd> for speaker notes &nbsp;·&nbsp; <kbd>→</kbd> next</div>
 
   <div class="reveal">
     <div class="slides">
 
-      <!-- 1 Title -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h1>Docker Workshop Companion</h1>
         <p class="lab-sub">Interactive Lab Guide</p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <use href="#docker-whale" transform="translate(55,10) scale(1.1)"/>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-01-viz.webp" alt="Docker whale illustration">
         </div>
         <aside class="notes">Present while participants follow WORKSHOP.md in VS Code with Runme.</aside>
       </section>
 
-      <!-- 2 Checklist -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Environment Checklist</h2>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg">
-            <path d="M210 8 L220 28 L242 28 L225 40 L232 62 L210 48 L188 62 L195 40 L178 28 L200 28 Z" fill="none" stroke="#90ee90" stroke-width="3"/>
-            <polyline points="202,48 208,54 222,38" fill="none" stroke="#90ee90" stroke-width="3"/>
-            <g transform="translate(40,45)">
-              <use href="#docker-whale" transform="scale(0.7)"/>
-            </g>
-            <g transform="translate(175,40)">
-              <path d="M0 0 L35 35 M35 0 L0 35" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-            </g>
-            <g transform="translate(310,38)">
-              <rect x="0" y="0" width="60" height="42" rx="6" fill="none" stroke="#fff" stroke-width="2"/>
-              <text x="18" y="28" fill="#fff" font-size="18" font-family="monospace">&gt;</text>
-              <polygon points="48,30 58,35 48,40" fill="#00d4ff"/>
-            </g>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-02-viz.webp" alt="Docker, VS Code, and terminal icons">
         </div>
         <p class="tagline">Linux · VS Code + Runme · Docker · ports 8080 &amp; 8081 free</p>
         <aside class="notes">Confirm repo cloned, Runme installed, sudo available for Module 0.</aside>
       </section>
 
-      <!-- 3 Module 1 Build -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 1: The Build Process</h2>
         <p class="cmd">
           <span class="c-white">docker buildx build --load -t </span><span class="c-cyan">hello-docker:1.0</span><span class="c-green"> .</span>
         </p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 480 140" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="25" width="100" height="90" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="8 5"/>
-            <line x1="40" y1="40" x2="120" y2="40" stroke="#fff" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="40" y1="60" x2="120" y2="60" stroke="#fff" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="40" y1="80" x2="120" y2="80" stroke="#fff" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="55" y1="30" x2="55" y2="110" stroke="#fff" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="95" y1="30" x2="95" y2="110" stroke="#fff" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="80" y="135" fill="#888" font-size="10" text-anchor="middle">Dockerfile</text>
-            <path d="M145 70 L195 70" stroke="#fff" stroke-width="3" marker-end="url(#a1)"/>
-            <g transform="translate(220,30)"><use href="#iso-cube"/></g>
-            <text x="250" y="135" fill="#888" font-size="10" text-anchor="middle">Image</text>
-            <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#fff"/></marker></defs>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-03-viz.webp" alt="Blueprint to container cube build diagram">
         </div>
         <aside class="notes">examples/hello-docker/ — each Dockerfile instruction becomes a cached layer.</aside>
       </section>
 
-      <!-- 4 Module 2 Port mapping -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 2: Port Mapping</h2>
         <p class="cmd">
           <span class="c-white">docker run -d --name hello -p </span><span class="c-orange">8080:80</span><span class="c-white"> </span><span class="c-cyan">hello-docker:1.0</span>
         </p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 480 150" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(40,35)">
-              <path d="M0 50 L70 50 L70 10 L110 10 L110 90 L70 90 L70 50" fill="none" stroke="#fff" stroke-width="2"/>
-              <rect x="15" y="25" width="55" height="35" fill="#111" stroke="#555"/>
-            </g>
-            <text x="75" y="130" fill="#888" font-size="10" text-anchor="middle">Host</text>
-            <path d="M155 75 C200 40 240 40 280 75" fill="none" stroke="#ff8c42" stroke-width="3"/>
-            <rect x="118" y="52" width="44" height="18" rx="3" fill="#ff8c42"/>
-            <text x="140" y="65" fill="#fff" font-size="11" text-anchor="middle">8080</text>
-            <g transform="translate(310,30)"><use href="#iso-cube"/></g>
-            <circle cx="350" cy="55" r="16" fill="none" stroke="#fff" stroke-width="2"/>
-            <text x="350" y="60" fill="#fff" font-size="12" text-anchor="middle">80</text>
-            <text x="350" y="130" fill="#888" font-size="10" text-anchor="middle">Container</text>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-04-viz.webp" alt="Laptop connected to container port mapping">
         </div>
         <aside class="notes">curl localhost:8080 — host port maps to nginx inside the container.</aside>
       </section>
 
-      <!-- 5 Module 3 Investigation -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 3: Investigation</h2>
         <p class="cmd">
           <span class="c-white">docker exec -it </span><span class="c-cyan">hello</span><span class="c-white"> </span><span class="c-green">sh</span>
         </p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(155,20)"><use href="#iso-cube" transform="scale(1.2)"/></g>
-            <circle cx="200" cy="85" r="55" fill="rgba(0,0,0,0.3)" stroke="#fff" stroke-width="3"/>
-            <line x1="240" y1="120" x2="290" y2="155" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-            <text x="200" y="92" fill="#90ee90" font-size="22" text-anchor="middle" font-family="monospace">&gt; _</text>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-05-viz.webp" alt="Magnifying glass over container">
         </div>
         <aside class="notes">Alpine nginx uses sh not bash. Also: docker logs, docker exec cat index.html.</aside>
       </section>
 
-      <!-- 6 Module 4 Visibility -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 4: Visibility</h2>
         <p class="cmd cmd-lg c-white">docker ps</p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="210" cy="100" r="70" fill="none" stroke="#333" stroke-width="1"/>
-            <circle cx="210" cy="100" r="48" fill="none" stroke="#333" stroke-width="1"/>
-            <circle cx="210" cy="100" r="26" fill="none" stroke="#333" stroke-width="1"/>
-            <line x1="210" y1="30" x2="210" y2="170" stroke="#333"/>
-            <line x1="140" y1="100" x2="280" y2="100" stroke="#333"/>
-            <path d="M210 100 L280 55" stroke="#00d4ff" stroke-width="2" opacity="0.5"/>
-            <g transform="translate(120,72) scale(0.45)"><use href="#iso-cube"/></g>
-            <g transform="translate(195,55) scale(0.45)"><use href="#iso-cube"/></g>
-            <g transform="translate(250,95) scale(0.45)"><use href="#iso-cube"/></g>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-06-viz.webp" alt="Radar view of running containers">
         </div>
         <aside class="notes">docker ps -a lists stopped containers too.</aside>
       </section>
 
-      <!-- 7 Module 4 Housekeeping -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 4: Housekeeping</h2>
         <p class="cmd">
           <span class="c-white">docker rm -f </span><span class="c-red">hello</span>
-          <span class="c-white"> &nbsp;·&nbsp; docker rmi hello-docker:1.0</span>
+          <span class="c-white"> · docker rmi hello-docker:1.0</span>
         </p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(130,25)"><use href="#iso-cube"/></g>
-            <g transform="translate(240,10) rotate(-25)">
-              <rect x="0" y="40" width="12" height="70" fill="#00d4ff"/>
-              <path d="M-20 40 L32 40 L16 10 Z" fill="#00d4ff"/>
-            </g>
-            <polygon points="200,60 210,75 195,90" fill="#00d4ff" opacity="0.7"/>
-            <polygon points="280,80 295,95 270,100" fill="#fff" opacity="0.5"/>
-            <polygon points="170,100 185,110 175,125" fill="#00d4ff" opacity="0.4"/>
-            <polygon points="310,55 325,70 305,75" fill="#fff" opacity="0.6"/>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-07-viz.webp" alt="Broom cleaning up container">
         </div>
         <aside class="notes">stop → start → rm → rmi. Remove container before its image.</aside>
       </section>
 
-      <!-- 8 Module 5 Compose file -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 5: Composing Services</h2>
-        <p class="cmd c-cyan" style="font-size:0.75em;border-bottom:3px solid #00d4ff;display:inline-block;padding-bottom:0.15em;">docker-compose.yml</p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
-            <rect x="175" y="5" width="70" height="45" rx="4" fill="none" stroke="#00d4ff" stroke-width="2"/>
-            <line x1="185" y1="15" x2="235" y2="15" stroke="#00d4ff"/>
-            <line x1="185" y1="25" x2="235" y2="25" stroke="#00d4ff"/>
-            <line x1="185" y1="35" x2="220" y2="35" stroke="#00d4ff"/>
-            <line x1="210" y1="50" x2="210" y2="75" stroke="#00d4ff" stroke-width="2"/>
-            <line x1="100" y1="75" x2="320" y2="75" stroke="#00d4ff" stroke-width="2"/>
-            <line x1="100" y1="75" x2="100" y2="95" stroke="#00d4ff" stroke-width="2"/>
-            <line x1="210" y1="75" x2="210" y2="95" stroke="#00d4ff" stroke-width="2"/>
-            <line x1="320" y1="75" x2="320" y2="95" stroke="#00d4ff" stroke-width="2"/>
-            <g transform="translate(70,95)"><use href="#iso-cube" transform="scale(0.85)"/></g>
-            <text x="100" y="155" fill="#00d4ff" font-size="11" text-anchor="middle">Web</text>
-            <g transform="translate(180,95)"><use href="#iso-cube" transform="scale(0.85)"/></g>
-            <text x="210" y="155" fill="#00d4ff" font-size="11" text-anchor="middle">API</text>
-            <g transform="translate(290,95)"><use href="#iso-cube" transform="scale(0.85)"/></g>
-            <text x="320" y="155" fill="#00d4ff" font-size="11" text-anchor="middle">Redis</text>
-          </svg>
+        <p class="cmd c-cyan" style="font-size:0.68em;border-bottom:3px solid #00d4ff;display:inline-block;padding-bottom:0.1em;">docker-compose.yml</p>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-08-viz.webp" alt="Compose file connecting Web and DB services">
         </div>
-        <aside class="notes">examples/compose-demo/ — frontend + backend bridge networks.</aside>
+        <aside class="notes">Workshop stack: web + api + redis with frontend/backend networks.</aside>
       </section>
 
-      <!-- 9 Module 5 Running -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>Module 5: Running Compose</h2>
         <p class="cmd">
           <span class="c-white">docker compose </span><span class="c-green">up</span><span class="c-white"> </span><span class="c-gold">-d --build --wait</span>
         </p>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(60,15)"><use href="#iso-cube" transform="scale(0.8)"/></g>
-            <text x="80" y="95" fill="#00d4ff" font-size="10">Web</text>
-            <g transform="translate(170,15)"><use href="#iso-cube" transform="scale(0.8)"/></g>
-            <text x="190" y="95" fill="#00d4ff" font-size="10">API</text>
-            <rect x="95" y="55" width="120" height="8" rx="2" fill="#ffd700"/>
-            <path d="M80 75 C80 110 120 120 160 130" fill="none" stroke="#ff8c42" stroke-width="3"/>
-            <rect x="148" y="118" width="36" height="16" rx="3" fill="#ff8c42"/>
-            <text x="166" y="130" fill="#fff" font-size="10" text-anchor="middle">8081</text>
-            <g transform="translate(130,115)">
-              <path d="M0 40 L60 40 L60 8 L95 8 L95 72 L60 72 L60 40" fill="none" stroke="#00d4ff" stroke-width="2"/>
-            </g>
-            <text x="175" y="165" fill="#888" font-size="10" text-anchor="middle">curl localhost:8081/api/health</text>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-09-viz.webp" alt="Web and DB connected to laptop on port 8081">
         </div>
-        <aside class="notes">redis_hits increments on repeated health curls.</aside>
+        <aside class="notes">curl localhost:8081/api/health — redis_hits increments on repeat.</aside>
       </section>
 
-      <!-- 10 Path to fleet -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>The Path to Fleet Management</h2>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(30,100)">
-              <path d="M0 40 L55 40 L55 8 L90 8 L90 72 L55 72 L55 40" fill="none" stroke="#00d4ff" stroke-width="2"/>
-            </g>
-            <polyline points="120,130 160,110 200,120 240,90 280,100 320,70 360,50" fill="none" stroke="#00d4ff" stroke-width="3"/>
-            <g transform="translate(330,15)">
-              <rect x="0" y="0" width="70" height="18" fill="#444" stroke="#00d4ff"/>
-              <rect x="0" y="22" width="70" height="18" fill="#444" stroke="#00d4ff"/>
-              <rect x="0" y="44" width="70" height="18" fill="#444" stroke="#00d4ff"/>
-              <rect x="0" y="66" width="70" height="18" fill="#444" stroke="#00d4ff"/>
-              <circle cx="10" cy="9" r="3" fill="#ffd700"/><circle cx="10" cy="31" r="3" fill="#ffd700"/>
-              <circle cx="10" cy="53" r="3" fill="#90ee90"/><circle cx="10" cy="75" r="3" fill="#ffd700"/>
-            </g>
-            <text x="210" y="160" fill="#888" font-size="10" text-anchor="middle">Local laptop → production fleet</text>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-10-viz.webp" alt="Path from laptop to server rack">
         </div>
         <aside class="notes">Bridge from single-host workshop to enterprise orchestration.</aside>
       </section>
 
-      <!-- 11 Kubernetes -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>The Next Step: Kubernetes</h2>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.45">
-              <g transform="translate(20,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(55,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(90,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(125,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(160,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(195,20)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(35,50)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(70,50)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(105,50)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(140,50)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-              <g transform="translate(175,50)"><use href="#iso-cube" transform="scale(0.35)"/></g>
-            </g>
-            <g transform="translate(40,100) scale(0.7)">
-              <polygon points="40,20 70,35 70,65 40,80 10,65 10,35" fill="#90ee90" stroke="#fff" stroke-width="2"/>
-              <text x="40" y="55" fill="#fff" font-size="14" text-anchor="middle">+</text>
-            </g>
-            <path d="M280 40 L320 60 L300 90 L340 110" fill="none" stroke="#00d4ff" stroke-width="2" marker-end="url(#a2)"/>
-            <path d="M300 30 L340 50 L320 80" fill="none" stroke="#00d4ff" stroke-width="2" marker-end="url(#a2)"/>
-            <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#00d4ff"/></marker></defs>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-11-viz.webp" alt="Grid of containers with orchestration arrows">
         </div>
         <aside class="notes">Self-healing pods, auto-scaling, multi-node clusters.</aside>
       </section>
 
-      <!-- 12 Podman -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>The Next Step: Podman</h2>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(115,15)"><use href="#iso-cube" transform="scale(1.1)"/></g>
-            <g transform="translate(95,5)"><use href="#iso-cube" transform="scale(0.75)" opacity="0.5"/></g>
-            <ellipse cx="160" cy="95" rx="55" ry="35" fill="none" stroke="#ffd700" stroke-width="3"/>
-            <ellipse cx="160" cy="95" rx="38" ry="22" fill="none" stroke="#ffd700" stroke-width="2"/>
-            <rect x="145" y="75" width="30" height="35" rx="4" fill="#ffd700"/>
-            <circle cx="160" cy="88" r="6" fill="#2b2b2b"/>
-            <path d="M105 70 Q160 30 215 70" fill="none" stroke="#ffd700" stroke-width="3"/>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-12-viz.webp" alt="Locked container stack">
         </div>
         <aside class="notes">Daemonless, rootless — containers as user child processes.</aside>
       </section>
 
-      <!-- 13 Enterprise Matrix -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h2>The Enterprise Matrix</h2>
-        <div class="viz-wrap">
-          <svg viewBox="0 0 420 70" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(40,10)"><path d="M0 35 L50 35 L50 5 L85 5 L85 65 L50 65 L50 35" fill="none" stroke="#fff" stroke-width="2"/></g>
-            <g transform="translate(175,5)">
-              <rect x="0" y="10" width="18" height="14" fill="none" stroke="#fff"/><rect x="22" y="10" width="18" height="14" fill="none" stroke="#fff"/>
-              <rect x="0" y="28" width="18" height="14" fill="none" stroke="#fff"/><rect x="22" y="28" width="18" height="14" fill="none" stroke="#fff"/>
-            </g>
-            <g transform="translate(310,15)"><rect x="10" y="0" width="35" height="45" rx="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="27" cy="22" r="5" fill="#2b2b2b" stroke="#fff"/></g>
-          </svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-13-viz.webp" alt="Compose, Kubernetes, and Podman icons">
         </div>
         <div class="matrix">
           <div class="col">
             <h3>Docker Compose</h3>
-            <p class="accent-gold">Local / Simple</p>
+            <p style="color:#ffd700">Local / Simple</p>
             <p>Sandboxing &amp; Testing</p>
           </div>
           <div class="col">
             <h3>Kubernetes</h3>
-            <p class="accent-cyan">Fleet / Scale</p>
+            <p style="color:#00d4ff">Fleet / Scale</p>
             <p>High Availability</p>
           </div>
           <div class="col">
             <h3>Podman</h3>
-            <p class="accent-green">Secure / Daemonless</p>
+            <p style="color:#90ee90">Secure / Daemonless</p>
             <p>Hardened Production</p>
           </div>
         </div>
         <aside class="notes">Workshop covers Compose; K8s and Podman are next steps.</aside>
       </section>
 
-      <!-- 14 Mission Accomplished -->
       <section class="lab-slide" data-background-color="#2b2b2b">
         <h1>Mission Accomplished</h1>
         <div class="cmd-box">docker compose down --volumes</div>
-        <p class="tagline">Clear the cache. Claim your space. Keep building.</p>
-        <div class="viz-wrap" style="opacity:0.15;margin-top:-2em;">
-          <svg viewBox="0 0 100 100"><path d="M20 50 L40 70 L80 25" fill="none" stroke="#90ee90" stroke-width="8" stroke-linecap="round"/></svg>
+        <div class="viz-img">
+          <img src="assets/notebook-slides/viz/slide-14-viz.webp" alt="Success checkmark">
         </div>
-        <aside class="notes">Run Module 6 cleanup cells in WORKSHOP.md. Challenge: edit index.html, rebuild, rerun.</aside>
+        <p class="tagline">Clear the cache. Claim your space. Keep building.</p>
+        <aside class="notes">Run Module 6 cleanup cells in WORKSHOP.md.</aside>
       </section>
 
     </div>
@@ -476,7 +290,7 @@
       hash: true,
       slideNumber: 'c/t',
       progress: true,
-      center: true,
+      center: false,
       transition: 'slide',
       width: 1100,
       height: 700,
