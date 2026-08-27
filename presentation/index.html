@@ -189,7 +189,7 @@
             <tr><td>✓ VS Code + Runme</td><td>Extension: <em>Stateful Runme</em></td></tr>
             <tr><td>✓ Ports free</td><td><code>8080</code> (hello-docker) and <code>8081</code> (compose-demo)</td></tr>
             <tr><td>✓ Sudo access</td><td>Module 0 installs Docker — password required</td></tr>
-            <tr><td>✓ Internet</td><td>Pulls nginx, redis, compose plugin fallback</td></tr>
+            <tr><td>✓ Internet</td><td>Pulls nginx and redis images during exercises</td></tr>
           </tbody>
         </table>
         <div class="warn">Ask: "Who already has Docker working?" — they can skim Module 0 but should still verify Compose v2.</div>
@@ -249,7 +249,7 @@
           <li><code>docker-buildx</code> — modern build tool</li>
           <li><code>docker compose</code> — Compose <strong>v2</strong> (space, not hyphen!)</li>
         </ul>
-        <div class="cue"><strong>NOW:</strong> Participants run Module 0 cells in order: Install Docker → Compose plugin → Enable service → Verify.</div>
+        <div class="cue"><strong>NOW:</strong> Participants run Module 0 cells in order: Install Docker → Install Compose → Enable service → Verify.</div>
         <aside class="notes">
           Module 0 is the slowest for many groups. Walk the room while apt runs.
           Two common failures: permission denied on socket, and compose not found.
@@ -266,7 +266,7 @@
           </div>
           <div>
             <h3>Compose not found</h3>
-            <p style="font-size:0.65em; text-align:left;">Re-run <strong>Ensure Compose plugin</strong> cell.<br>Must show <code>docker compose version</code> v2.x.<br>Module 5 will fail without this.</p>
+            <p style="font-size:0.65em; text-align:left;">Re-run <strong>Install Compose v2 plugin</strong>.<br>Must show <code>docker compose version</code> v2.x.<br>Module 5 will fail without this.</p>
           </div>
         </div>
         <div class="warn">Do not advance to Module 1 until <code>docker info</code> and <code>docker compose version</code> both succeed.</div>

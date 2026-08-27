@@ -31,9 +31,8 @@ Install Docker, verify it works, and fix permission errors if needed.
 sudo apt update && sudo apt install -y docker.io docker-buildx
 ```
 
-```sh {"name":"Install Compose v2 plugin","tag":"prerequisites","terminalRows":"6","interactive":"true"}
+```sh {"name":"Install Compose v2 plugin","tag":"prerequisites","terminalRows":"3","interactive":"true"}
 sudo apt install -y docker-compose-v2
-sudo apt install -y docker-compose-plugin 2>/dev/null || true
 ```
 
 ```sh {"name":"Enable Docker service","tag":"prerequisites","terminalRows":"3","interactive":"true"}
@@ -44,26 +43,16 @@ sudo systemctl start docker && sudo systemctl enable docker
 docker buildx version
 ```
 
-### Install Compose plugin
-
-Docker 29.x uses Compose **v2** as a CLI plugin — run `docker compose` (with a space), not the legacy `docker-compose` command. The cell above installs the Ubuntu package (`docker-compose-v2`) and, when available, Docker's official package (`docker-compose-plugin`). This cell verifies it works and applies a download fallback if the plugin is still missing.
-
-```sh {"name":"Ensure Compose plugin","tag":"prerequisites","terminalRows":"10","interactive":"true"}
-if ! docker compose version >/dev/null 2>&1; then
-  sudo apt install -y docker-compose-v2 2>/dev/null || sudo apt install --reinstall -y docker-compose-v2
-fi
-if ! docker compose version >/dev/null 2>&1; then
-  mkdir -p ~/.docker/cli-plugins
-  curl -fsSL "https://github.com/docker/compose/releases/download/v2.40.3/docker-compose-linux-$(uname -m)" -o ~/.docker/cli-plugins/docker-compose
-  chmod +x ~/.docker/cli-plugins/docker-compose
-fi
-docker compose version
-```
-
 ### Verify Docker
+
+Docker 29.x uses Compose **v2** as a CLI plugin — run `docker compose` (with a space), not the legacy `docker-compose` command.
 
 ```sh {"name":"Docker version","tag":"prerequisites","terminalRows":"2","interactive":"false"}
 docker --version
+```
+
+```sh {"name":"Verify Compose","tag":"prerequisites","terminalRows":"2","interactive":"false"}
+docker compose version
 ```
 
 ```sh {"name":"Docker daemon info","tag":"prerequisites","terminalRows":"6","interactive":"false"}
@@ -84,11 +73,11 @@ sudo chown $USER /var/run/docker.sock
 
 ### Fix: compose not found
 
-If **Ensure Compose plugin** prints `docker: 'compose' is not a docker command`:
+If **Verify Compose** prints `docker: 'compose' is not a docker command`:
 
-1. Re-run **Ensure Compose plugin** — the apt reinstall or download fallback should fix it.
+1. Re-run **Install Compose v2 plugin**.
 2. Confirm with `docker compose version` (should show v2.x).
-3. If you installed Docker from Docker's official apt repo instead of Ubuntu's `docker.io`, run: `sudo apt install -y docker-compose-plugin`, then re-run **Ensure Compose plugin**.
+3. If you installed Docker from Docker's official apt repo instead of Ubuntu's `docker.io`, run: `sudo apt install -y docker-compose-plugin`, then re-run **Verify Compose**.
 
 ⬆️ **Do not skip this** — Module 5 requires `docker compose`.
 
@@ -247,7 +236,7 @@ docker image prune -f
 
 Multi-container apps with **bridge** networks. Inspect `examples/compose-demo/`.
 
-> Requires `docker compose version` to succeed (Module 0). Re-run **Ensure Compose plugin** if needed.
+> Requires `docker compose version` to succeed (Module 0). Re-run **Install Compose v2 plugin** if needed.
 
 ### Validate compose file
 
