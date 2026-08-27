@@ -15,6 +15,25 @@ A hands-on Docker tutorial for **Linux**, run inside **VS Code** with the Runme 
 
 Module 0 covers Docker install, the Compose plugin setup, and the permission fix. In the **Runme Notebooks** panel, cells are grouped by tag: `prerequisites`, `create-image`, `run-exec`, `commit`, `manage`, `compose`, `cleanup`.
 
+## Facilitator presentation
+
+Running the workshop for a group? Open **[presentation/index.html](presentation/index.html)** in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
+
+| Key | Action |
+|-----|--------|
+| `→` / `←` | Next / previous slide |
+| `S` | Speaker notes (facilitator cues, timing, troubleshooting) |
+| `F` | Fullscreen |
+
+Slides mirror each workshop module and include green **NOW** cues — advance when most participants have finished the matching Runme cells.
+
+To serve locally (optional):
+
+```bash
+cd presentation && python3 -m http.server 8000
+# Open http://localhost:8000
+```
+
 ## Start here
 
 1. **Clone** this repository and open the folder in VS Code.
@@ -48,6 +67,7 @@ examples/
 ├── hello-docker/     # Single-container exercises (Modules 1–4)
 └── compose-demo/     # Multi-service compose with bridge networks (Module 5)
 WORKSHOP.md           # Interactive notebook — start here
+presentation/         # Facilitator slide deck (present while audience works)
 ```
 
 ## Cleanup

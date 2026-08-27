@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Basics Workshop — Facilitator Slides</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <style>
+    :root {
+      --docker-blue: #0db7ed;
+      --docker-navy: #1d63ed;
+      --cue-green: #2ecc71;
+      --warn-orange: #f39c12;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal h1 { color: var(--docker-blue); font-size: 2.2em; }
+    .reveal h2 { color: var(--docker-blue); font-size: 1.6em; }
+    .reveal h3 { color: #fff; font-size: 1.1em; margin-bottom: 0.6em; }
+
+    .subtitle { color: #aaa; font-size: 0.75em; margin-top: 0.5em; }
+    .badge {
+      display: inline-block;
+      background: var(--docker-navy);
+      color: #fff;
+      font-size: 0.55em;
+      padding: 0.2em 0.7em;
+      border-radius: 999px;
+      vertical-align: middle;
+      margin-left: 0.4em;
+    }
+    .badge-time { background: #555; }
+
+    .cue {
+      background: rgba(46, 204, 113, 0.15);
+      border-left: 5px solid var(--cue-green);
+      padding: 0.6em 1em;
+      margin: 0.8em 0;
+      text-align: left;
+      font-size: 0.72em;
+      line-height: 1.45;
+    }
+    .cue strong { color: var(--cue-green); }
+
+    .warn {
+      background: rgba(243, 156, 18, 0.15);
+      border-left: 5px solid var(--warn-orange);
+      padding: 0.6em 1em;
+      margin: 0.8em 0;
+      text-align: left;
+      font-size: 0.68em;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5em;
+      text-align: left;
+      font-size: 0.72em;
+    }
+
+    .reveal pre {
+      font-size: 0.48em;
+      box-shadow: none;
+      width: 100%;
+      margin: 0.5em 0;
+    }
+
+    .reveal pre code {
+      max-height: 420px;
+      padding: 1em;
+      line-height: 1.35;
+    }
+
+    .reveal ul, .reveal ol {
+      display: block;
+      text-align: left;
+      margin-left: 1.2em;
+      font-size: 0.78em;
+      line-height: 1.5;
+    }
+
+    .reveal table {
+      font-size: 0.62em;
+      margin: 0.5em auto;
+    }
+    .reveal table th { background: var(--docker-navy); }
+    .reveal table td, .reveal table th { padding: 0.4em 0.8em; }
+
+    .diagram {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.42em;
+      line-height: 1.3;
+      text-align: left;
+      background: #111;
+      padding: 1em;
+      border-radius: 8px;
+      white-space: pre;
+      color: #ccc;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      margin-top: 1em;
+      overflow: hidden;
+    }
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background: var(--docker-blue);
+    }
+
+    .footer-hint {
+      position: fixed;
+      bottom: 12px;
+      right: 16px;
+      font-size: 11px;
+      color: #666;
+      z-index: 100;
+    }
+
+    .fragment.highlight-current-blue.visible.current-fragment {
+      color: var(--docker-blue);
+    }
+  </style>
+</head>
+<body>
+  <div class="footer-hint">Press <kbd>S</kbd> for speaker notes &nbsp;·&nbsp; <kbd>→</kbd> next slide</div>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- TITLE -->
+      <section>
+        <h1>Docker Basics<br>Interactive Workshop</h1>
+        <p class="subtitle">Facilitator slides — audience follows <code>WORKSHOP.md</code> in VS Code</p>
+        <p style="font-size:0.65em; color:#888; margin-top:2em;">30–45 minutes &nbsp;·&nbsp; Linux &nbsp;·&nbsp; VS Code + Runme</p>
+        <aside class="notes">
+          Welcome everyone. You will present these slides while participants work hands-on in their own VS Code.
+          They should have cloned the repo and opened WORKSHOP.md before you start Module 0.
+          Keep pace: pause on each green "NOW" cue until most people are caught up.
+        </aside>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section>
+        <h2>How this session works</h2>
+        <div class="two-col">
+          <div>
+            <h3>You (facilitator)</h3>
+            <ul>
+              <li>Present concepts on these slides</li>
+              <li>Explain <em>why</em> before <em>how</em></li>
+              <li>Watch for raised hands / chat</li>
+              <li>Advance when most cells are done</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Participants</h3>
+            <ul>
+              <li>Open <code>WORKSHOP.md</code> in VS Code</li>
+              <li>Click ▶ on each Runme cell</li>
+              <li>Run cells <strong>top to bottom</strong></li>
+              <li>Enter sudo password when prompted</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cue"><strong>NOW:</strong> Confirm everyone has VS Code open with this repo and <code>WORKSHOP.md</code> visible as a Runme notebook.</div>
+        <aside class="notes">
+          If someone's file opens as plain markdown, tell them: right-click → Open With → Runme.
+          Recommend Runme extension if not installed (Ctrl+Shift+X, search Runme).
+        </aside>
+      </section>
+
+      <!-- SETUP CHECKLIST -->
+      <section>
+        <h2>Pre-flight checklist</h2>
+        <table>
+          <thead><tr><th>Check</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>✓ Linux</td><td>Ubuntu/Debian — workshop uses <code>apt</code></td></tr>
+            <tr><td>✓ VS Code + Runme</td><td>Extension: <em>Stateful Runme</em></td></tr>
+            <tr><td>✓ Ports free</td><td><code>8080</code> (hello-docker) and <code>8081</code> (compose-demo)</td></tr>
+            <tr><td>✓ Sudo access</td><td>Module 0 installs Docker — password required</td></tr>
+            <tr><td>✓ Internet</td><td>Pulls nginx, redis, compose plugin fallback</td></tr>
+          </tbody>
+        </table>
+        <div class="warn">Ask: "Who already has Docker working?" — they can skim Module 0 but should still verify Compose v2.</div>
+        <aside class="notes">
+          Quick show of hands saves time. People with Docker already installed still need `docker compose version` to work for Module 5.
+        </aside>
+      </section>
+
+      <!-- AGENDA -->
+      <section>
+        <h2>Agenda</h2>
+        <table>
+          <thead><tr><th>Module</th><th>Topic</th><th>~Time</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Install Docker, Buildx, Compose v2</td><td>5–10 min</td></tr>
+            <tr><td>1</td><td>Build an image with Dockerfile</td><td>5–7 min</td></tr>
+            <tr><td>2</td><td>Run containers, exec, logs</td><td>8–10 min</td></tr>
+            <tr><td>3</td><td>Commit a container (optional)</td><td>5 min</td></tr>
+            <tr><td>4</td><td>Stop, start, rm, rmi</td><td>5–7 min</td></tr>
+            <tr><td>5</td><td>Docker Compose + bridge networks</td><td>10–12 min</td></tr>
+            <tr><td>6</td><td>Final cleanup</td><td>3 min</td></tr>
+          </tbody>
+        </table>
+        <div class="progress-bar"><span style="width:0%"></span></div>
+        <aside class="notes">
+          Total 30–45 min depending on install speed and questions. Module 3 is optional — skip if running short on time.
+        </aside>
+      </section>
+
+      <!-- CONCEPTS -->
+      <section>
+        <h2>Core concepts</h2>
+        <div class="two-col">
+          <div>
+            <h3>Image</h3>
+            <p style="font-size:0.72em; text-align:left;">Read-only template — filesystem + metadata. Built from a <strong>Dockerfile</strong>.</p>
+            <h3>Container</h3>
+            <p style="font-size:0.72em; text-align:left;">Running (or stopped) instance of an image. Isolated process with its own filesystem layer.</p>
+          </div>
+          <div>
+            <div class="diagram">Dockerfile  ──build──▶  Image  ──run──▶  Container
+   (recipe)              (template)         (instance)</div>
+          </div>
+        </div>
+        <p style="font-size:0.65em; color:#888;">Analogy: image = class, container = object instance</p>
+        <aside class="notes">
+          Keep this short — they'll feel these concepts in Module 1–2. Emphasize layers/cache when building in Module 1.
+        </aside>
+      </section>
+
+      <!-- MODULE 0 -->
+      <section>
+        <h2>Module 0 <span class="badge badge-time">5–10 min</span></h2>
+        <h3>Prerequisites — install &amp; verify Docker</h3>
+        <ul>
+          <li><code>docker.io</code> — Docker Engine</li>
+          <li><code>docker-buildx</code> — modern build tool</li>
+          <li><code>docker compose</code> — Compose <strong>v2</strong> (space, not hyphen!)</li>
+        </ul>
+        <div class="cue"><strong>NOW:</strong> Participants run Module 0 cells in order: Install Docker → Compose plugin → Enable service → Verify.</div>
+        <aside class="notes">
+          Module 0 is the slowest for many groups. Walk the room while apt runs.
+          Two common failures: permission denied on socket, and compose not found.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Module 0 — Troubleshooting</h2>
+        <div class="two-col">
+          <div>
+            <h3>Permission denied</h3>
+            <pre><code class="language-bash">sudo chown $USER /var/run/docker.sock</code></pre>
+            <p style="font-size:0.65em;">Then re-run <em>Docker daemon info</em></p>
+          </div>
+          <div>
+            <h3>Compose not found</h3>
+            <p style="font-size:0.65em; text-align:left;">Re-run <strong>Ensure Compose plugin</strong> cell.<br>Must show <code>docker compose version</code> v2.x.<br>Module 5 will fail without this.</p>
+          </div>
+        </div>
+        <div class="warn">Do not advance to Module 1 until <code>docker info</code> and <code>docker compose version</code> both succeed.</div>
+        <aside class="notes">
+          Optional permanent fix: usermod -aG docker $USER (requires re-login). For workshop, chown is faster.
+        </aside>
+      </section>
+
+      <!-- MODULE 1 -->
+      <section>
+        <h2>Module 1 <span class="badge badge-time">5–7 min</span></h2>
+        <h3>Creating an image</h3>
+        <p style="font-size:0.72em; text-align:left;">Explore <code>examples/hello-docker/</code></p>
+        <pre><code class="language-dockerfile">FROM nginx:alpine
+COPY app/index.html /usr/share/nginx/html/index.html</code></pre>
+        <ul>
+          <li><code>docker buildx create --use</code> — set up builder</li>
+          <li><code>docker buildx build --load -t hello-docker:1.0 .</code></li>
+          <li>Each instruction = a cached <strong>layer</strong></li>
+        </ul>
+        <div class="cue"><strong>NOW:</strong> Run <em>Set up Buildx builder</em> → <em>Build hello-docker image</em> → <em>List hello-docker images</em>.</div>
+        <aside class="notes">
+          Point out the Dockerfile is tiny — FROM base image, COPY one file. Build output shows layer steps.
+          Tag `-t hello-docker:1.0` names the image for later modules.
+        </aside>
+      </section>
+
+      <!-- MODULE 2 -->
+      <section>
+        <h2>Module 2 <span class="badge badge-time">8–10 min</span></h2>
+        <h3>Run &amp; exec</h3>
+        <pre><code class="language-bash">docker run -d --name hello -p 8080:80 hello-docker:1.0</code></pre>
+        <table>
+          <thead><tr><th>Flag</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>-d</code></td><td>Detached (background)</td></tr>
+            <tr><td><code>--name hello</code></td><td>Human-readable name</td></tr>
+            <tr><td><code>-p 8080:80</code></td><td>Host port → container port</td></tr>
+          </tbody>
+        </table>
+        <div class="cue"><strong>NOW:</strong> Run container → <code>docker ps</code> → <code>curl localhost:8080</code>.</div>
+        <aside class="notes">
+          Explain port mapping: localhost:8080 on host reaches nginx port 80 inside container.
+          curl should return "Hello from Docker!" HTML.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Module 2 — Exec &amp; logs</h2>
+        <div class="two-col">
+          <div>
+            <h3>Non-interactive exec</h3>
+            <pre><code class="language-bash">docker exec hello cat \
+  /usr/share/nginx/html/index.html</code></pre>
+          </div>
+          <div>
+            <h3>Interactive shell</h3>
+            <pre><code class="language-bash">docker exec -it hello sh</code></pre>
+            <p style="font-size:0.65em;">Try <code>hostname</code>, <code>ls</code>, then <code>exit</code></p>
+          </div>
+        </div>
+        <pre><code class="language-bash">docker logs hello</code></pre>
+        <div class="cue"><strong>NOW:</strong> Exec cells + interactive shell + logs. Give ~2 min for interactive shell exploration.</div>
+        <aside class="notes">
+          Interactive shell is a good moment for participants to explore. `-it` = interactive + TTY.
+          logs shows nginx access log entries from their curl requests.
+        </aside>
+      </section>
+
+      <!-- MODULE 3 OPTIONAL -->
+      <section>
+        <h2>Module 3 <span class="badge badge-time">optional · 5 min</span></h2>
+        <h3>Commit a container to a new image</h3>
+        <pre><code class="language-bash">docker exec hello sh -c 'echo "committed-layer" > /tmp/marker'
+docker commit hello hello-docker:committed
+docker run --rm hello-docker:committed cat /tmp/marker</code></pre>
+        <p style="font-size:0.72em; text-align:left;"><code>docker commit</code> snapshots the container filesystem — useful for debugging, but prefer Dockerfile for reproducible builds.</p>
+        <div class="cue"><strong>NOW:</strong> Expand "Module 3" in WORKSHOP.md and run the commit cells — or skip if short on time.</div>
+        <aside class="notes">
+          Optional section is collapsed in WORKSHOP.md under details/summary. Skip entirely if behind schedule.
+        </aside>
+      </section>
+
+      <!-- MODULE 4 -->
+      <section>
+        <h2>Module 4 <span class="badge badge-time">5–7 min</span></h2>
+        <h3>Container &amp; image management</h3>
+        <pre><code class="language-bash">docker stop hello      # graceful stop
+docker start hello     # restart stopped container
+docker rm -f hello     # remove container
+docker rmi hello-docker:1.0   # remove image</code></pre>
+        <ul>
+          <li><code>docker ps</code> — running &nbsp;|&nbsp; <code>docker ps -a</code> — all</li>
+          <li>Must remove container before removing its image</li>
+          <li><code>docker image prune -f</code> — optional cleanup</li>
+        </ul>
+        <div class="cue"><strong>NOW:</strong> Stop → start → rm → rmi sequence. Container must be removed before image.</div>
+        <aside class="notes">
+          Common error: can't rmi while container exists. rm -f removes running or stopped containers.
+        </aside>
+      </section>
+
+      <!-- MODULE 5 INTRO -->
+      <section>
+        <h2>Module 5 <span class="badge badge-time">10–12 min</span></h2>
+        <h3>Docker Compose + bridge networks</h3>
+        <p style="font-size:0.72em; text-align:left;">Multi-container app in <code>examples/compose-demo/</code></p>
+        <div class="diagram">Browser ──:8081──▶ [web/nginx] ──frontend net──▶ [api/python]
+                                              backend net ──▶ [redis]</div>
+        <ul>
+          <li><strong>web</strong> — nginx reverse proxy (host port 8081)</li>
+          <li><strong>api</strong> — Python health API, talks to Redis</li>
+          <li><strong>redis</strong> — hit counter backend only</li>
+        </ul>
+        <aside class="notes">
+          Compose orchestrates multiple services from one YAML file. Bridge networks isolate traffic — api bridges frontend+backend, redis only on backend.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Module 5 — Compose file</h2>
+        <pre><code class="language-yaml">networks:
+  frontend: { driver: bridge }
+  backend:  { driver: bridge }
+
+services:
+  web:   ports: ["8081:80"]   networks: [frontend]
+  api:   networks: [frontend, backend]
+  redis: networks: [backend]</code></pre>
+        <div class="cue"><strong>NOW:</strong> <code>docker compose config</code> → <code>docker network ls</code> → <code>docker compose up -d --build --wait</code></div>
+        <aside class="notes">
+          `docker compose config` validates YAML. `--wait` waits for healthchecks (api has one).
+          First build may take a few minutes — good time for Q&A.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Module 5 — Test the stack</h2>
+        <pre><code class="language-bash">curl -s localhost:8081          # web front-end
+curl -s localhost:8081/api/health   # proxied API</code></pre>
+        <p style="font-size:0.72em; text-align:left;">Run the health curl <strong>several times</strong> — <code>redis_hits</code> should increment.</p>
+        <pre><code class="language-json">{"status":"ok","hostname":"…","redis_hits":3}</code></pre>
+        <div class="cue"><strong>NOW:</strong> curl web + API health (repeat API curl). Then <code>docker compose ps</code> and inspect networks.</div>
+        <aside class="notes">
+          nginx proxies /api/ to api:5000 internally — participants can't curl api directly from host (no published port). That's the point of the network segmentation demo.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Module 5 — Tear down</h2>
+        <pre><code class="language-bash">cd examples/compose-demo
+docker compose down --volumes --remove-orphans</code></pre>
+        <ul>
+          <li><code>down</code> stops and removes containers + networks</li>
+          <li><code>--volumes</code> removes named/anonymous volumes</li>
+          <li><code>--remove-orphans</code> cleans leftover containers</li>
+        </ul>
+        <div class="cue"><strong>NOW:</strong> Tear down compose stack before Module 6 cleanup.</div>
+        <aside class="notes">
+          Verify with docker network ls — compose-demo networks should be gone.
+        </aside>
+      </section>
+
+      <!-- MODULE 6 -->
+      <section>
+        <h2>Module 6 <span class="badge badge-time">3 min</span></h2>
+        <h3>Final cleanup</h3>
+        <p style="font-size:0.72em; text-align:left;">Removes any leftover workshop containers and images.</p>
+        <div class="cue"><strong>NOW:</strong> Run all three cleanup cells — should report <code>(none)</code> remaining.</div>
+        <aside class="notes">
+          Cleanup is idempotent — safe to re-run. Good habit to teach: always clean up after exercises.
+        </aside>
+      </section>
+
+      <!-- WRAP UP -->
+      <section>
+        <h2>You did it!</h2>
+        <ul>
+          <li class="fragment">Built images with Dockerfile + Buildx</li>
+          <li class="fragment">Ran containers, exec'd in, read logs</li>
+          <li class="fragment">Managed lifecycle (stop/start/rm/rmi)</li>
+          <li class="fragment">Orchestrated multi-service apps with Compose</li>
+          <li class="fragment">Used bridge networks for service isolation</li>
+        </ul>
+        <aside class="notes">
+          Quick recap — ask what surprised them. Common aha: port mapping, internal DNS (api, redis hostnames), layer caching.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Challenge</h2>
+        <p style="font-size:0.78em;">Modify <code>examples/hello-docker/app/index.html</code>, rebuild the image, and run a new container.</p>
+        <pre><code class="language-bash"># edit index.html, then:
+cd examples/hello-docker
+docker buildx build --load -t hello-docker:2.0 .
+docker run -d --name hello-v2 -p 8080:80 hello-docker:2.0
+curl -s localhost:8080</code></pre>
+        <p style="font-size:0.65em; color:#888;">Optional homework — reinforces the build → run cycle.</p>
+        <aside class="notes">
+          If time remains, do this live. Otherwise assign as takeaway. Emphasize you must rebuild after Dockerfile/app changes — running old container won't pick up edits.
+        </aside>
+      </section>
+
+      <section>
+        <h1>Questions?</h1>
+        <p class="subtitle">Resources: <code>WORKSHOP.md</code> · <code>README.md</code> · <a href="https://docs.docker.com/" style="color:var(--docker-blue)">docs.docker.com</a></p>
+        <aside class="notes">
+          Thank the group. Remind them cleanup cells exist if they skipped Module 6.
+          Share repo link for anyone who wants to redo at home.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      progress: true,
+      center: true,
+      transition: 'slide',
+      plugins: [ RevealNotes, RevealHighlight ]
+    });
+  </script>
+</body>
+</html>
