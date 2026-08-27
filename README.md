@@ -22,8 +22,8 @@ Three browser slide decks support the workshop:
 | Deck | File | Use case |
 |------|------|----------|
 | **Facilitator guide** | [presentation/index.html](presentation/index.html) | Step-by-step cues while participants run `WORKSHOP.md` cells |
-| **Workshop companion** | [presentation/workshop-companion.html](presentation/workshop-companion.html) | 14-slide visual lab guide (NotebookLM style, SVG diagrams) |
-| **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | 10-slide intro: local containers → Compose → K8s |
+| **Workshop companion** | [presentation/workshop-companion.html](presentation/workshop-companion.html) | 14-slide visual lab guide (NotebookLM illustrations + workshop text) |
+| **Concept overview** | [presentation/from-local-to-fleet.html](presentation/from-local-to-fleet.html) | The Container Blueprint visuals + fleet intro |
 
 Open either file in a browser (fullscreen with **F11**) while participants follow [WORKSHOP.md](WORKSHOP.md) on their machines.
 
