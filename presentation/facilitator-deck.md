@@ -74,7 +74,7 @@ style: |
 How to present
 - Put this file in presentation/ (next to assets/) so the NotebookLM images resolve.
 - VS Code: install the "Marp for VS Code" extension → Open Preview to the Side → Present.
-- CLI: npx @marp-team/marp-cli workshop.md --preview
+- CLI: npx @marp-team/marp-cli facilitator-deck.md --preview
 - Speaker notes: Marp preview → "Presenter view" (or export PDF with notes).
 - Edit freely: each --- is a slide. Swap/resize images with ![h:360](...). Delete the Appendix if you don't want K8s/Podman.
 
